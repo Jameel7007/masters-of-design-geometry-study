@@ -30,6 +30,26 @@ Second source: the supplied “Principles of the Naqshbandi Way,” also publish
 
 Prescriptive passages in that second source - including breath retention, bodily visualization, and repetition counts - are evidence about a practice tradition, not material for this public experience. They will not be reproduced as instructions.
 
+### C. Shaykh Abdullah al-Fa’iz ad-Daghestani and the five stations
+
+The site is dedicated to Shaykh Abdullah al-Fa’iz ad-Daghestani (1891-1973). The supplied biographical text presents him as a master of the Naqshbandi Golden Chain and records teachings associated with the Nine Points.
+
+The separately supplied legacy source, “Naqshbandi Teachings of the 9 Lataif / Points & Realities of the Enneagram,” attributes five stations of the heart to his teaching:
+
+| Station | Meaning | Light | Prophetic association stated by the source |
+|---|---|---|---|
+| **Qalb** | Heart | Yellow | Sayyidina Adam |
+| **Sirr** | Secret | Red | Sayyidina Nuh |
+| **Sirr as-Sirr** | Secret of the Secret | White | Sayyidina Ibrahim and Sayyidina Musa |
+| **Khafa** | Hidden | Green | Sayyidina ‘Isa |
+| **Akhfa** | Most Hidden | Black | The Reality of Sayyidina Muhammad ﷺ |
+
+That source calls these five stations “the center of the Nine Points.” The introduction therefore places them at the threshold of the work, before the eleven principles. It does **not** assign the five stations one-to-one to Bakhtiar’s nine numeric positions or claim that the two sources describe an identical diagram.
+
+The source also contains restricted or potentially dangerous physiological and devotional claims. The public experience will not reproduce heart-stopping, repetition-count, unveiling, or teacher-authority material as instructions.
+
+Source: https://legacy.nurmuhammad.com/HeartLevels/LataifGalb/gsdagestanion9points.htm
+
 ## Bakhtiar-supported geometry
 
 The prototype uses only these settled geometric relationships:

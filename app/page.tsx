@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 
 type Scene = {
   number: string;
@@ -29,10 +30,10 @@ const SCENES: Scene[] = [
     slug: 'hosh-dar-dam',
     transliteration: 'Hosh dar dam',
     english: 'Conscious breathing',
-    line: 'The whole sign expands and gathers without losing its center.',
+    line: 'The whole sign visibly expands, rests, and gathers without losing its center.',
     source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
-    interpretation: 'A restrained change of scale and luminosity translates attention to breath without prescribing a breathing practice.',
-    cue: 'Notice the interval between expansion and return.',
+    interpretation: 'Layered waves of scale, luminosity, and circulation translate attention to breath without prescribing a breathing practice.',
+    cue: 'Watch expansion, interval, circulation, and return.',
   },
   {
     number: '02',
@@ -146,6 +147,14 @@ const SCENES: Scene[] = [
   },
 ];
 
+const HEART_STATIONS = [
+  { name: 'Qalb', meaning: 'The Heart', color: '#d7b94f', authority: 'Sayyidina Adam' },
+  { name: 'Sirr', meaning: 'The Secret', color: '#9b332d', authority: 'Sayyidina Nuh' },
+  { name: 'Sirr as-Sirr', meaning: 'The Secret of the Secret', color: '#ede8dc', authority: 'Sayyidina Ibrahim & Sayyidina Musa' },
+  { name: 'Khafa', meaning: 'The Hidden', color: '#3f724d', authority: 'Sayyidina ‘Isa' },
+  { name: 'Akhfa', meaning: 'The Most Hidden', color: '#171714', authority: 'The Reality of Sayyidina Muhammad ﷺ' },
+] as const;
+
 const MOVEMENT = [1, 4, 2, 8, 5, 7];
 const TRIANGLE = [9, 3, 6];
 
@@ -207,7 +216,10 @@ function GeometryCanvas({
       const cx = width / 2;
       const cy = height / 2;
       const baseRadius = Math.min(width * 0.405, height * 0.39);
-      const breath = sceneIndex === 1 ? 1 + Math.sin(elapsed * 0.00135) * 0.014 : 1;
+      const breathWave = sceneIndex === 1
+        ? (Math.sin(elapsed * 0.00095 - Math.PI / 2) + 1) / 2
+        : 0.5;
+      const breath = sceneIndex === 1 ? 0.965 + breathWave * 0.075 : 1;
       const rotation = sceneIndex === 8 ? Math.sin(elapsed * 0.00032) * 0.075 : 0;
       const instability = sceneIndex === 7 && !reducedMotion ? (steady ? 0.15 : 1) : 0;
       const radius = baseRadius * breath;
@@ -351,10 +363,16 @@ function GeometryCanvas({
         drawHeart(smooth((progress - 0.88) / 0.12));
         drawZero(smooth((progress - 0.43) / 0.16));
       } else if (sceneIndex === 1) {
-        drawComplete(0.88);
-        const breathLight = 0.45 + Math.sin(elapsed * 0.00135) * 0.18;
-        drawCircle(breathLight, 1.035);
-        drawCenter(1, 1.2 + Math.sin(elapsed * 0.00135) * 0.12);
+        const cycle = reducedMotion ? 0.62 : (elapsed % 6600) / 6600;
+        drawComplete(0.58 + breathWave * 0.30);
+        drawPath(MOVEMENT, 'rgba(239, 207, 146, .98)', 0.34 + breathWave * 0.52, smooth(cycle), true, 1.5);
+        for (let ring = 0; ring < 3; ring += 1) {
+          const wave = reducedMotion ? 0.46 : (cycle + ring * 0.23) % 1;
+          const waveAlpha = Math.sin(wave * Math.PI) * 0.42;
+          drawCircle(waveAlpha, 0.86 + wave * 0.25);
+        }
+        drawHeart(0.72 + breathWave * 0.28, 0.92 + breathWave * 0.16);
+        drawCenter(1, 1.15 + breathWave * 0.78);
       } else if (sceneIndex === 2) {
         const step = reducedMotion ? 0 : Math.floor(elapsed / 1350) % MOVEMENT.length;
         const current = MOVEMENT[step];
@@ -486,11 +504,25 @@ export default function Home() {
   const [paused, setPaused] = useState(false);
   const [steady, setSteady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [introStep, setIntroStep] = useState(0);
 
   const goTo = useCallback((index: number) => {
     setSceneIndex((index + SCENES.length) % SCENES.length);
     setPaused(false);
     setSteady(false);
+  }, []);
+
+  const enterAt = useCallback((index = 0) => {
+    setEntered(true);
+    goTo(index);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [goTo]);
+
+  const openIntroduction = useCallback(() => {
+    setEntered(false);
+    setIntroStep(0);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, []);
 
   useEffect(() => {
@@ -505,16 +537,18 @@ export default function Home() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === 'PageDown') {
         event.preventDefault();
-        goTo(sceneIndex + 1);
+        if (entered) goTo(sceneIndex + 1);
+        else setIntroStep((current) => Math.min(2, current + 1));
       }
       if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
         event.preventDefault();
-        goTo(sceneIndex - 1);
+        if (entered) goTo(sceneIndex - 1);
+        else setIntroStep((current) => Math.max(0, current - 1));
       }
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [goTo, sceneIndex]);
+  }, [entered, goTo, sceneIndex]);
 
   useEffect(() => {
     const activePoint = document.querySelector<HTMLElement>('.track-point.active');
@@ -527,14 +561,108 @@ export default function Home() {
 
   const scene = SCENES[sceneIndex];
 
+  if (!entered) {
+    return (
+      <main className="introduction-shell">
+        <header className="intro-masthead">
+          <div className="mark" aria-hidden="true">MD</div>
+          <div className="identity">
+            <p className="overline">Masters of the Design</p>
+            <p className="status">An introduction to the Eleven Watches</p>
+          </div>
+          <button type="button" className="intro-skip" onClick={() => enterAt(0)}>Enter experience <Arrow direction="right" /></button>
+        </header>
+
+        <section className="intro-stage" aria-live="polite">
+          {introStep === 0 && (
+            <div className="intro-page dedication-page" key="dedication">
+              <div className="intro-geometry" aria-hidden="true">
+                <GeometryCanvas sceneIndex={0} paused={false} steady={false} reducedMotion={reducedMotion} />
+              </div>
+              <div className="intro-copy-block">
+                <p className="intro-kicker">A threshold before the Watches</p>
+                <h1>One sign.<br />Eleven ways of attention.</h1>
+                <p className="intro-dek">A mathematically generated Sufi Enneagram becomes a field for eleven Naqshbandi principles. The geometry is sourced; the responsive motions are a contemporary interpretation.</p>
+                <div className="dedication-card">
+                  <span>Dedicated with love and reverence to</span>
+                  <strong>Shaykh Abdullah al-Fa’iz ad-Daghestani <b>ق</b></strong>
+                  <p>1891–1973 · A master of the Naqshbandi Golden Chain whose teaching on the heart and the Nine Points forms the threshold of this work.</p>
+                </div>
+                <button type="button" className="intro-primary" onClick={() => setIntroStep(1)}>Continue to the five stations <Arrow direction="right" /></button>
+              </div>
+            </div>
+          )}
+
+          {introStep === 1 && (
+            <div className="intro-page stations-page" key="stations">
+              <div className="intro-heading">
+                <p className="intro-kicker">The heart at the center</p>
+                <h1>Five stations<br />of the Heart</h1>
+                <blockquote>“These Five Stations are the center of the Nine Points.”</blockquote>
+                <p className="intro-source-line">From teachings attributed to Shaykh Abdullah ad-Daghestani ق · <a href="https://legacy.nurmuhammad.com/HeartLevels/LataifGalb/gsdagestanion9points.htm" target="_blank" rel="noreferrer">Read the source</a></p>
+              </div>
+              <div className="station-field">
+                {HEART_STATIONS.map((station, index) => (
+                  <article className="station-card" key={station.name}>
+                    <span className="station-index">0{index + 1}</span>
+                    <i className="station-light" style={{ '--station-color': station.color } as CSSProperties} aria-hidden="true" />
+                    <div>
+                      <h2>{station.name}</h2>
+                      <p>{station.meaning}</p>
+                      <small>{station.authority}</small>
+                    </div>
+                  </article>
+                ))}
+                <p className="station-boundary">The five stations and their colors are presented as a distinct teaching. This experience does not assign them one-to-one to Bakhtiar’s nine numeric positions, and it does not reproduce restricted practice instructions.</p>
+              </div>
+            </div>
+          )}
+
+          {introStep === 2 && (
+            <div className="intro-page principles-page" key="principles">
+              <div className="principles-heading">
+                <p className="intro-kicker">The sequence made explicit</p>
+                <h1>The eleven<br />principles</h1>
+                <p>Each principle changes the behavior of the same sign. Select one to enter there, or begin with the construction of the Point.</p>
+                <button type="button" className="intro-primary" onClick={() => enterAt(0)}>Begin with the Point <Arrow direction="right" /></button>
+              </div>
+              <div className="principle-overview" aria-label="The eleven Naqshbandi principles">
+                {SCENES.slice(1, 12).map((item, index) => (
+                  <button type="button" key={item.slug} onClick={() => enterAt(index + 1)}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{item.transliteration}</strong>
+                    <small>{item.english}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        <nav className="intro-nav" aria-label="Introduction sequence">
+          <button type="button" className="intro-arrow" onClick={() => setIntroStep((current) => Math.max(0, current - 1))} disabled={introStep === 0} aria-label="Previous introduction page"><Arrow direction="left" /></button>
+          <div>
+            {['Dedication', 'Five stations', 'Eleven principles'].map((label, index) => (
+              <button type="button" key={label} className={introStep === index ? 'active' : ''} onClick={() => setIntroStep(index)} aria-current={introStep === index ? 'step' : undefined}>
+                <span>0{index + 1}</span>{label}
+              </button>
+            ))}
+          </div>
+          <button type="button" className="intro-arrow" onClick={() => introStep === 2 ? enterAt(0) : setIntroStep((current) => current + 1)} aria-label={introStep === 2 ? 'Enter the experience' : 'Next introduction page'}><Arrow direction="right" /></button>
+        </nav>
+      </main>
+    );
+  }
+
   return (
     <main className="experience-shell">
       <header className="masthead">
-        <button className="mark" type="button" onClick={() => goTo(0)} aria-label="Return to the prologue">MD</button>
+        <button className="mark" type="button" onClick={openIntroduction} aria-label="Open the introduction and dedication">MD</button>
         <div className="identity">
           <p className="overline">Masters of the Design</p>
-          <p className="status">The Eleven Watches · an interpretive geometry</p>
+          <p className="status">Dedicated to Shaykh Abdullah al-Fa’iz ad-Daghestani ق</p>
         </div>
+        <button type="button" className="intro-return" onClick={openIntroduction}>Introduction</button>
         <div className="header-progress" aria-label={`Scene ${sceneIndex + 1} of ${SCENES.length}`}>
           <span>{String(sceneIndex + 1).padStart(2, '0')}</span>
           <i aria-hidden="true" />

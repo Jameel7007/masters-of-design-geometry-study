@@ -4,6 +4,8 @@
 
 **Interactive experience implemented after Gate 1 approval.** The accompanying build now carries the settled geometric engine through a prologue, eleven distinct Watches, and an epilogue while retaining explicit source / interpretation notes.
 
+The opening threshold now precedes the geometric sequence with three explicit steps: dedication, the five stations of the heart, and a selectable overview of all eleven principles.
+
 ## Working title
 
 Two candidates remain open:
@@ -16,6 +18,8 @@ Prototype label: **Masters of the Design / Geometry Study 01**. This is not a fi
 ## Experience thesis
 
 One living geometric object carries the whole work.
+
+The site is dedicated to Shaykh Abdullah al-Fa’iz ad-Daghestani. His teaching on five stations at the center of the Nine Points is presented as a distinct introductory source layer, not silently merged with Bakhtiar’s geometry.
 
 The visitor does not encounter eleven separate illustrations. Each principle changes the behavior, visibility, tempo, or spatial reading of the same mathematically generated sign.
 
@@ -103,6 +107,7 @@ The movement line fades, then numbers, nine positions, circumference, and finall
 The full build should use one coherent vocabulary:
 
 - **breathe:** scale / luminosity variation below the threshold of spectacle;
+- **breathing revision:** the first Watch uses a visibly wider scale cycle, traveling luminosity, three propagating rings, heart-triangle expansion, and a stronger center pulse while remaining observational rather than instructional;
 - **travel:** interpolation along existing radii and graph edges;
 - **remember:** recurrence with accumulated clarity;
 - **return:** reverse interpolation toward source coordinates;
