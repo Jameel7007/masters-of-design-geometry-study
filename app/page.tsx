@@ -11,6 +11,7 @@ type Scene = {
   transliteration: string;
   english: string;
   overview?: string;
+  shahNote?: string;
   line: string;
   source: string;
   interpretation: string;
@@ -34,6 +35,7 @@ const SCENES: Scene[] = [
     transliteration: 'Hosh dar dam',
     english: 'Conscious breathing',
     overview: 'Safeguard inhalation, exhalation, and the interval between them from heedlessness, so the heart remains connected to the Divine Presence.',
+    shahNote: 'He adds remembering and reaching toward subtle perception to the awareness of breathing.',
     line: 'The whole sign visibly expands, rests, and gathers without losing its center.',
     source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
     interpretation: 'Layered waves of scale, luminosity, and circulation translate attention to breath without prescribing a breathing practice.',
@@ -44,7 +46,8 @@ const SCENES: Scene[] = [
     slug: 'nazar-bar-qadam',
     transliteration: 'Nazar bar qadam',
     english: 'Watch your step',
-    overview: 'Join gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence. Idries Shah adds an emphasis on watchfulness in action.',
+    overview: 'Join gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence.',
+    shahNote: 'He emphasizes awareness in action, watchfulness, and concentration.',
     line: 'Only the present position and its next relation come fully into view.',
     source: 'The principle concerns watchfulness and the step. No reviewed source assigns it to an enneagram path.',
     interpretation: 'The moving emphasis along the recurring number path is our visual proposal.',
@@ -56,6 +59,7 @@ const SCENES: Scene[] = [
     transliteration: 'Safar dar watan',
     english: 'Journey homeward',
     overview: 'Distinguish outward travel from the inward journey: leave lower manners and worldly desire for higher manners, purity, and movement from creation toward the Creator.',
+    shahNote: 'He renders this as “Travel in One’s Own Land”: exploration and transformation of the self.',
     line: 'Journeys begin at different points around the circumference and return together to zero.',
     source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
     interpretation: 'The traveling point makes that inward relation spatial and visible.',
@@ -67,6 +71,7 @@ const SCENES: Scene[] = [
     transliteration: 'Khalwat dar anjuman',
     english: 'Solitude in the crowd',
     overview: 'Remain outwardly in companionship with people while the heart is inwardly present with God: true seclusion within the gathering.',
+    shahNote: 'He describes “Solitude in Company” as detaching and reattaching consciousness.',
     line: 'The circumference circulates in many rhythms while the center stays undisturbed.',
     source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
     interpretation: 'Independent peripheral rhythms surround a constant center.',
@@ -88,7 +93,8 @@ const SCENES: Scene[] = [
     slug: 'baz-gasht',
     transliteration: 'Baz gasht',
     english: 'Restraint · returning',
-    overview: 'Return to Allah in surrender, submission, and humility, with God as the seeker’s goal. Idries Shah adds the rendering “restraint” or “pulling back” as a secondary linguistic note.',
+    overview: 'Return to Allah in surrender, submission, and humility, with God as the seeker’s goal.',
+    shahNote: 'He gives the contrasting rendering “restraint,” literally “pulling back.”',
     line: 'The extended line pulls back through the order from which it came.',
     source: 'The principle holds both return and restraint, but no geometric assignment is established.',
     interpretation: 'A reversible drawing motion preserves both renderings without claiming to resolve them.',
@@ -122,6 +128,7 @@ const SCENES: Scene[] = [
     transliteration: 'Wuquf-i zamani',
     english: 'Pause of time',
     overview: 'Watch each moment for composure or heedlessness, recognizing presence and negligence, thanking God for good, and seeking forgiveness for lapses.',
+    shahNote: 'He renders this as “Pause of Time” and adds the reprise of thought and action.',
     line: 'Turning rings make duration visible; one touch holds them at a single moment.',
     source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
     interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
@@ -908,7 +915,7 @@ export default function Home() {
               <div className="principles-heading">
                 <p className="intro-kicker">The sequence made explicit</p>
                 <h1>The eleven<br />principles</h1>
-                <p>Each principle changes the behavior of the same sign. Select one to enter there, or begin with the construction of the Point.</p>
+                <p>The explanations follow teachings of the Naqshbandi Shaykhs; selected notes from Idries Shah offer a second reading. Each principle changes the behavior of the same sign.</p>
                 <button type="button" className="intro-primary" onClick={() => enterAt(0)}>Begin with the Point <Arrow direction="right" /></button>
               </div>
               <div className="principle-overview" aria-label="The eleven Naqshbandi principles">
@@ -1027,9 +1034,11 @@ export default function Home() {
           <p className="english">{scene.english}</p>
 
           {scene.overview && (
-            <aside className="source-overview" aria-label={`Source overview for ${scene.transliteration}`}>
-              <span>From the Naqshbandi Shaykhs</span>
+            <aside className="source-overview" aria-label={`Overview of ${scene.transliteration}`}>
               <p>{scene.overview}</p>
+              {scene.shahNote && (
+                <p className="shah-note"><span>Idries Shah adds</span>{scene.shahNote}</p>
+              )}
             </aside>
           )}
 
@@ -1069,7 +1078,7 @@ export default function Home() {
                 <>
                   <p><span>Naqshbandi references</span><a href="https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/" target="_blank" rel="noreferrer">The Principles of the Naqshbandi Way</a> · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/muhammad-bahauddin-shah-naqshband/" target="_blank" rel="noreferrer">Muhammad Baha’uddin Shah Naqshband</a> · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/shaykh-abdullah-al-faiz-ad-daghestani-3/" target="_blank" rel="noreferrer">Shaykh Abdullah al-Fa’iz ad-Daghestani</a></p>
                   <p><span>Construction note</span>The diagram is calculated from a center, radius, and angle.</p>
-                  <p><span>Secondary note</span>Idries Shah, <cite>A Perfumed Scorpion</cite>.</p>
+                  <p><span>Idries Shah</span><cite>A Perfumed Scorpion</cite>, “The Eleven Rules of the Naqshbandiyya (Masters of the Design),” pp. 85–87.</p>
                 </>
               )}
             </div>

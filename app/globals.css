@@ -175,8 +175,9 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 .english { margin: 14px 0 0; color: #8d8477; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 16px; font-style: italic; }
 .scene-line { max-width: 520px; margin: clamp(28px, 4vh, 48px) 0 0; color: #aaa295; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: clamp(17px, 1.45vw, 22px); line-height: 1.48; }
 .source-overview { max-width: 560px; margin-top: 22px; padding: 15px 18px 17px; border-left: 2px solid rgba(215,185,121,.72); background: linear-gradient(100deg, rgba(215,185,121,.09), rgba(215,185,121,.018)); }
-.source-overview > span { display: block; color: #d7b979; font-size: 8px; font-weight: 700; line-height: 1.35; letter-spacing: .16em; text-transform: uppercase; }
-.source-overview p { margin: 9px 0 0; color: #c0b7a8; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 14px; line-height: 1.55; }
+.source-overview p { margin: 0; color: #c0b7a8; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 14px; line-height: 1.55; }
+.source-overview .shah-note { margin-top: 13px; padding-top: 11px; border-top: 1px solid rgba(215,185,121,.20); color: #aaa092; font-size: 12px; line-height: 1.52; }
+.source-overview .shah-note span { display: block; margin-bottom: 4px; color: #c5ab72; font-family: ui-sans-serif, system-ui, sans-serif; font-size: 7px; font-style: normal; font-weight: 700; line-height: 1.35; letter-spacing: .15em; text-transform: uppercase; }
 .source-overview + .scene-line { margin-top: clamp(20px, 3vh, 34px); }
 .interaction-cue { display: flex; align-items: center; gap: 10px; max-width: 480px; margin: 22px 0 0; color: #91897e; font-size: 9px; line-height: 1.5; letter-spacing: .09em; text-transform: uppercase; }
 .interaction-cue span { color: var(--gold); font-size: 12px; }
