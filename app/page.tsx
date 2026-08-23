@@ -803,10 +803,9 @@ export default function Home() {
           )}
 
           {sceneIndex < SCENES.length - 1 && (
-            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)} aria-label={`Continue to ${nextScene.transliteration}: ${nextScene.english}`}>
-              <span>{sceneIndex === 0 ? 'Next · Begin Principle 01' : `Next · Principle ${nextScene.number}`}</span>
-              <strong>{nextScene.transliteration}</strong>
-              <small>{nextScene.english}</small>
+            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === 0 ? 'Continue to the first principle' : sceneIndex === SCENES.length - 2 ? 'Continue to the epilogue' : 'Continue to the next principle'}>
+              <span>{sceneIndex === 0 ? 'Begin the study' : sceneIndex === SCENES.length - 2 ? 'Complete the study' : 'Continue'}</span>
+              <strong>{sceneIndex === 0 ? 'First principle' : sceneIndex === SCENES.length - 2 ? 'Epilogue' : 'Next principle'}</strong>
               <Arrow direction="right" />
             </button>
           )}
