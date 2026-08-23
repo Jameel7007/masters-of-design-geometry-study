@@ -585,6 +585,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (!entered) window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [entered, introStep]);
+
+  useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'ArrowRight' || event.key === 'PageDown') {
         event.preventDefault();
@@ -653,6 +657,7 @@ export default function Home() {
                 <h1>Five stations<br />of the Heart</h1>
                 <blockquote>“These Five Stations are the center of the Nine Points.”</blockquote>
                 <p className="intro-source-line">From the teachings of Shaykh Abdullah ad-Daghestani ق · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/shaykh-abdullah-al-faiz-ad-daghestani-3/" target="_blank" rel="noreferrer">Read on Naqshbandi.org</a></p>
+                <button type="button" className="intro-primary" onClick={() => setIntroStep(2)}>Continue to the eleven principles <Arrow direction="right" /></button>
               </div>
               <div className="station-field">
                 {HEART_STATIONS.map((station, index) => (
@@ -700,13 +705,6 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <button type="button" className="intro-next" onClick={() => introStep === 2 ? enterAt(0) : setIntroStep((current) => current + 1)} aria-label={introStep === 2 ? 'Begin with the Point' : `Continue to ${['Five stations', 'Eleven principles'][introStep]}`}>
-            <span className="intro-next-copy">
-              <small>{introStep === 2 ? 'Begin the study' : 'Continue to'}</small>
-              <strong>{['Five stations', 'Eleven principles', 'The Point'][introStep]}</strong>
-            </span>
-            <Arrow direction="right" />
-          </button>
         </nav>
       </main>
     );

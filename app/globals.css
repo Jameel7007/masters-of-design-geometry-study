@@ -87,7 +87,7 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 .principle-overview strong { color: #bdb19c; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 15px; font-weight: 400; }
 .principle-overview small { color: #91897e; font-size: 8px; letter-spacing: .08em; text-transform: uppercase; }
 
-.intro-nav { min-height: 76px; display: grid; grid-template-columns: minmax(110px, .38fr) minmax(450px, 1fr) minmax(210px, .5fr); align-items: stretch; padding: 0 clamp(12px, 2.2vw, 34px) max(10px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(12,12,11,.97); }
+.intro-nav { min-height: 76px; display: grid; grid-template-columns: minmax(110px, .38fr) minmax(450px, 1fr); align-items: stretch; padding: 0 clamp(12px, 2.2vw, 34px) max(10px, env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(12,12,11,.97); }
 .intro-nav > div { display: flex; align-items: stretch; justify-content: center; }
 .intro-nav > div button { min-width: 150px; border: 0; border-left: 1px solid var(--line); background: transparent; color: #91897e; font-size: 9px; letter-spacing: .11em; text-transform: uppercase; cursor: pointer; }
 .intro-nav > div button:last-child { border-right: 1px solid var(--line); }
@@ -97,13 +97,6 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 .intro-arrow { display: inline-flex; align-items: center; gap: 10px; padding: 0 15px; border: 0; background: transparent; color: #9c917f; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; cursor: pointer; }
 .intro-arrow > span:first-child { font-size: 18px; }
 .intro-arrow:disabled { color: #37342f; cursor: default; }
-.intro-next { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 17px 0 20px; border: 0; border-left: 1px solid rgba(215,185,121,.38); background: linear-gradient(105deg, rgba(215,185,121,.105), rgba(215,185,121,.025)); color: #e0d1b5; text-align: left; cursor: pointer; transition: background .2s ease, color .2s ease; }
-.intro-next-copy { display: grid; gap: 4px; }
-.intro-next-copy small { color: #aa9a78; font-size: 7px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
-.intro-next-copy strong { color: inherit; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 14px; font-weight: 400; line-height: 1; }
-.intro-next > span:last-child { display: grid; place-items: center; width: 32px; height: 32px; flex: 0 0 32px; border: 1px solid rgba(215,185,121,.52); border-radius: 50%; color: #e7c97e; font-size: 18px; transition: transform .2s ease, background .2s ease; }
-.intro-next:hover { background: linear-gradient(105deg, rgba(215,185,121,.16), rgba(215,185,121,.04)); color: #f0e5d1; }
-.intro-next:hover > span:last-child { background: rgba(215,185,121,.1); transform: translateX(2px); }
 
 .experience-shell {
   height: 100vh;
@@ -257,7 +250,7 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .intro-copy-block { padding: 42px clamp(26px, 8vw, 70px) 52px; }
   .stations-page, .principles-page { grid-template-columns: 1fr; align-items: start; padding: 48px clamp(26px, 8vw, 70px) 58px; }
   .station-field, .principle-overview { margin-top: 14px; }
-  .intro-nav { position: static; grid-template-columns: minmax(82px, .32fr) minmax(0, 1fr) minmax(165px, .52fr); }
+  .intro-nav { position: static; grid-template-columns: minmax(82px, .32fr) minmax(0, 1fr); }
   .intro-nav > div button { min-width: 110px; }
   .experience-shell { height: auto; min-height: 100svh; overflow: visible; grid-template-rows: 68px 64px auto; }
   .scene-grid { grid-template-columns: 1fr; grid-template-rows: minmax(350px, 49svh) auto; }
@@ -287,15 +280,10 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .principle-overview .principle-eleven { grid-column: auto; width: auto; grid-template-columns: 30px 1fr; justify-content: initial; justify-self: stretch; border-left: 0; }
   .station-card { min-height: 100px; }
   .principle-overview button { min-height: 68px; }
-  .intro-nav { grid-template-columns: 48px minmax(0, 1fr) clamp(140px, 36vw, 170px); min-height: 74px; padding-inline: 2px; }
+  .intro-nav { grid-template-columns: 48px minmax(0, 1fr); min-height: 74px; padding-inline: 2px; }
   .intro-nav > div button { min-width: 0; flex: 1; padding: 0 4px; font-size: 8px; letter-spacing: .05em; }
   .intro-arrow { gap: 5px; padding: 0 6px; font-size: 7px; letter-spacing: .06em; }
   .intro-arrow > span:first-child { font-size: 15px; }
-  .intro-next { gap: 10px; padding: 0 10px 0 13px; }
-  .intro-next-copy { gap: 4px; }
-  .intro-next-copy small { font-size: 7px; line-height: 1.25; letter-spacing: .1em; }
-  .intro-next-copy strong { font-size: 14px; line-height: 1.05; text-wrap: balance; }
-  .intro-next > span:last-child { width: 31px; height: 31px; flex-basis: 31px; font-size: 17px; }
   .experience-shell { grid-template-rows: 64px 62px auto; }
   .masthead { padding: 0 17px; gap: 11px; }
   .mark { width: 31px; height: 31px; }
