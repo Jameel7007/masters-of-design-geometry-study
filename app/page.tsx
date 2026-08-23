@@ -11,6 +11,9 @@ type Scene = {
   transliteration: string;
   english: string;
   overview?: string;
+  overviewUrl?: string;
+  overviewSource?: string;
+  shahNote?: boolean;
   line: string;
   source: string;
   interpretation: string;
@@ -33,7 +36,8 @@ const SCENES: Scene[] = [
     slug: 'hosh-dar-dam',
     transliteration: 'Hosh dar dam',
     english: 'Conscious breathing',
-    overview: 'Idries Shah links awareness of breathing with remembering and subtle perception. The Naqshbandi source emphasizes safeguarding inhalation, exhalation, and the interval between them from heedlessness.',
+    overview: 'The Naqshbandi teaching asks the seeker to safeguard inhalation, exhalation, and the interval between them from heedlessness, so the heart remains connected to the Divine Presence.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'The whole sign visibly expands, rests, and gathers without losing its center.',
     source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
     interpretation: 'Layered waves of scale, luminosity, and circulation translate attention to breath without prescribing a breathing practice.',
@@ -44,7 +48,9 @@ const SCENES: Scene[] = [
     slug: 'nazar-bar-qadam',
     transliteration: 'Nazar bar qadam',
     english: 'Watch your step',
-    overview: 'Idries Shah emphasizes awareness of actions, watchfulness, and concentration. The Naqshbandi source says the gaze precedes the step and warns that unnecessary sights may disturb or veil the heart.',
+    overview: 'The Naqshbandi teaching joins gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence. Idries Shah adds a concise emphasis on watchfulness in action.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
+    shahNote: true,
     line: 'Only the present position and its next relation come fully into view.',
     source: 'The principle concerns watchfulness and the step. No reviewed source assigns it to an enneagram path.',
     interpretation: 'The moving emphasis along the recurring number path is our visual proposal.',
@@ -55,7 +61,8 @@ const SCENES: Scene[] = [
     slug: 'safar-dar-watan',
     transliteration: 'Safar dar watan',
     english: 'Journey homeward',
-    overview: 'Idries Shah connects the journey with exploring one’s own mind and transforming the self. The Naqshbandi source describes an inward passage from lower manners toward higher manners, and from creation toward the Creator.',
+    overview: 'The Naqshbandi teaching distinguishes outward travel from the inward journey: leaving lower manners and worldly desire for higher manners, purity, and movement from creation toward the Creator.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'Movement crosses the rim, enters the sign, and approaches zero.',
     source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
     interpretation: 'The traveling point makes that inward relation spatial and visible.',
@@ -66,7 +73,8 @@ const SCENES: Scene[] = [
     slug: 'khalwat-dar-anjuman',
     transliteration: 'Khalwat dar anjuman',
     english: 'Solitude in the crowd',
-    overview: 'Idries Shah describes the capacity to remove and reattach consciousness while in company. The Naqshbandi source describes being outwardly with people while inwardly remaining present with God.',
+    overview: 'The Naqshbandi teaching defines this as outward companionship with people while the heart remains inwardly present with God: true seclusion within the gathering.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'The circumference remains active while the center stays undisturbed.',
     source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
     interpretation: 'Independent peripheral rhythms surround a constant center.',
@@ -77,7 +85,8 @@ const SCENES: Scene[] = [
     slug: 'yad-kard',
     transliteration: 'Yad kard',
     english: 'Essential remembrance',
-    overview: 'Idries Shah describes contact as interrupted and remembrance as reaching to restore it through dedication. The Naqshbandi source calls yad kard the essence of dhikr and describes remembrance as polishing the heart.',
+    overview: 'Naqshbandi.org presents Yad kard as the essence of dhikr: remembrance that polishes the heart and gathers it into contemplation and Divine Presence.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'The same path returns, each recurrence leaving a little more clarity.',
     source: 'No reviewed source establishes a one-to-one geometric correspondence for this principle.',
     interpretation: 'Repeated passage through the generated path is our metaphor for remembrance, not a devotional instruction.',
@@ -88,7 +97,9 @@ const SCENES: Scene[] = [
     slug: 'baz-gasht',
     transliteration: 'Baz gasht',
     english: 'Restraint · returning',
-    overview: 'Idries Shah names this Restraint, literally “pulling back.” The Naqshbandi source names it Returning and emphasizes surrender, submission, and return to God.',
+    overview: 'Naqshbandi.org defines Baz gasht as returning to Allah in surrender, submission, and humility, with God as the seeker’s goal. Idries Shah’s rendering, “restraint” or “pulling back,” is retained as a secondary linguistic note.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
+    shahNote: true,
     line: 'The extended line pulls back through the order from which it came.',
     source: 'Shah renders the term as restraint or pulling back; the expanded Naqshbandi source emphasizes returning. No geometric assignment is established.',
     interpretation: 'A reversible drawing motion preserves both renderings without claiming to resolve them.',
@@ -99,7 +110,8 @@ const SCENES: Scene[] = [
     slug: 'nigah-dasht',
     transliteration: 'Nigah dasht',
     english: 'Attentiveness',
-    overview: 'Idries Shah describes watchfulness that excludes distractions and remains alert to subtle perception. The Naqshbandi source describes guarding the heart against disruptive thoughts and low inclinations.',
+    overview: 'The Naqshbandi teaching describes guarding the heart from bad thoughts and low inclinations, so attention is not severed from the Divine.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'Restlessness disperses the figure; sustained attention lets it align.',
     source: 'The sources describe watchfulness or attentiveness, but give no specific enneagram correspondence.',
     interpretation: 'Press-and-hold steadiness is our accessible interaction metaphor.',
@@ -110,7 +122,8 @@ const SCENES: Scene[] = [
     slug: 'yad-dasht',
     transliteration: 'Yad dasht',
     english: 'Recollection',
-    overview: 'Idries Shah describes recollection, or noting, as awareness of Absolute Truth as present. The Naqshbandi source emphasizes keeping the heart continuously in the Divine Presence.',
+    overview: 'The Naqshbandi teaching describes safeguarding the heart with remembrance in every breath, remaining continuously in Divine Presence, and affirming truthful thought over distraction.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/',
     line: 'Relationships orbit, reverse, and reconfigure around an unbroken thread through the center.',
     source: 'Bakhtiar’s center as unitary focus is directly supported; using it for this principle is conceptually adjacent.',
     interpretation: 'The persistent center-thread anchors a continuously moving field of arcs, points, and rotating relations.',
@@ -121,7 +134,9 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-zamani',
     transliteration: 'Wuquf-i zamani',
     english: 'Pause of time',
-    overview: 'Idries Shah describes a reprise or review of thought and action. The Naqshbandi source adds watchfulness over one’s composure and an accounting of each moment as presence or heedlessness.',
+    overview: 'Naqshbandi.org explains awareness of time as watching one’s composure and heedlessness, reviewing each moment as presence or negligence, thanking God for good and seeking forgiveness for lapses.',
+    overviewUrl: 'https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/muhammad-bahauddin-shah-naqshband/',
+    overviewSource: 'Naqshbandi.org, “Awareness of Time”',
     line: 'Motion can stop while the evidence of duration remains.',
     source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
     interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
@@ -132,7 +147,9 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-adadi',
     transliteration: 'Wuquf-i adadi',
     english: 'Pause of numbers',
-    overview: 'Idries Shah emphasizes awareness of repetition and forms of counting. The Naqshbandi source says number is not an end in itself: counting gathers attention, guards the heart from distraction, and returns number toward the One.',
+    overview: 'Naqshbandi.org teaches that counting in silent dhikr is not for the account itself: it gathers attention, guards the heart from intrusive thoughts, and turns number toward the One.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/awareness-of-numbers-wuquf-adadi/',
+    overviewSource: 'Naqshbandi.org, “Awareness of Numbers”',
     line: 'Ornament recedes. The exact numerical skeleton remains.',
     source: 'The nine divisions, 3 / 6 / 9 triangle, zero, and 1 / 4 / 2 / 8 / 5 / 7 line are directly supported by Bakhtiar.',
     interpretation: 'Pairing this mathematical disclosure with the principle is our interpretation.',
@@ -143,7 +160,9 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-qalbi',
     transliteration: 'Wuquf-i qalbi',
     english: 'Pause of the heart',
-    overview: 'Idries Shah emphasizes visualization or awareness of the heart. The Naqshbandi source describes directing the heart toward Divine Presence and quieting the turbulence of thoughts moving between light and dark.',
+    overview: 'Naqshbandi.org describes directing the heart toward Divine Presence until it sees no other beloved, using remembrance to quiet the heart’s alternating turbulence of light and dark.',
+    overviewUrl: 'https://naqshbandi.org/teachings/topics/awareness-of-the-heart-wuquf-qalbi/',
+    overviewSource: 'Naqshbandi.org, “Awareness of the Heart”',
     line: 'The periphery yields to the smaller heart-triangle gathered around zero.',
     source: 'Bakhtiar directly supports the spiritual-heart triangle near the center. Its use as this culmination is conceptually adjacent.',
     interpretation: 'The staged recession from periphery to heart to point is our narrative composition.',
@@ -648,7 +667,7 @@ export default function Home() {
                 <p className="intro-kicker">The heart at the center</p>
                 <h1>Five stations<br />of the Heart</h1>
                 <blockquote>“These Five Stations are the center of the Nine Points.”</blockquote>
-                <p className="intro-source-line">From teachings attributed to Shaykh Abdullah ad-Daghestani ق · <a href="https://legacy.nurmuhammad.com/HeartLevels/LataifGalb/gsdagestanion9points.htm" target="_blank" rel="noreferrer">Read the source</a></p>
+                <p className="intro-source-line">From the teachings of Shaykh Abdullah ad-Daghestani ق · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/shaykh-abdullah-al-faiz-ad-daghestani-3/" target="_blank" rel="noreferrer">Read on Naqshbandi.org</a></p>
               </div>
               <div className="station-field">
                 {HEART_STATIONS.map((station, index) => (
@@ -741,9 +760,12 @@ export default function Home() {
 
           {scene.overview && (
             <aside className="source-overview" aria-label={`Source overview for ${scene.transliteration}`}>
-              <span>From the source texts</span>
+              <span>From the Naqshbandi teaching</span>
               <p>{scene.overview}</p>
-              <small>Idries Shah, <cite>A Perfumed Scorpion</cite> · <a href="https://legacy.nurmuhammad.com/NaqshbandiSecrets/11principlesofthenaqshbandisufiway.htm" target="_blank" rel="noreferrer">Naqshbandi Sufi Way, “The Principles of the Naqshbandi Way”</a></small>
+              <small>
+                <a href={scene.overviewUrl} target="_blank" rel="noreferrer">{scene.overviewSource ?? 'Naqshbandi.org, “The Principles of the Naqshbandi Way”'}</a>
+                {scene.shahNote && <> · Idries Shah, <cite>A Perfumed Scorpion</cite> (secondary note)</>}
+              </small>
             </aside>
           )}
 
@@ -820,10 +842,6 @@ export default function Home() {
           ))}
         </div>
         <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === SCENES.length - 1 ? 'Begin again at The Point' : `Next: ${nextScene.transliteration}`}>
-          <span className="nav-next-copy">
-            <small>{sceneIndex === SCENES.length - 1 ? 'Begin again' : 'Next principle'}</small>
-            <strong>{nextScene.transliteration}</strong>
-          </span>
           <Arrow direction="right" />
         </button>
       </nav>
