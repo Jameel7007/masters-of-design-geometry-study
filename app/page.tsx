@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 
+export const dynamic = 'force-static';
+
 type Scene = {
   number: string;
   slug: string;
