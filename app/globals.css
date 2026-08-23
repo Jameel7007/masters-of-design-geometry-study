@@ -171,9 +171,6 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 .source-overview { max-width: 540px; margin-top: 20px; padding: 13px 16px 14px; border-left: 2px solid rgba(215,185,121,.72); background: linear-gradient(100deg, rgba(215,185,121,.09), rgba(215,185,121,.018)); }
 .source-overview > span { display: block; color: #d7b979; font-size: 8px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 .source-overview p { margin: 7px 0 0; color: #c0b7a8; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 14px; line-height: 1.45; }
-.source-overview small { display: block; margin-top: 7px; color: #91897e; font-size: 8px; letter-spacing: .08em; }
-.source-overview small a { color: #ac9b78; text-decoration-color: rgba(215,185,121,.38); text-underline-offset: 3px; }
-.source-overview small a:hover { color: var(--gold); }
 .source-overview + .scene-line { margin-top: clamp(20px, 3vh, 34px); }
 .interaction-cue { display: flex; align-items: center; gap: 10px; max-width: 480px; margin: 22px 0 0; color: #91897e; font-size: 9px; line-height: 1.5; letter-spacing: .09em; text-transform: uppercase; }
 .interaction-cue span { color: var(--gold); font-size: 12px; }
@@ -199,6 +196,8 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 .research-note > div { padding-top: 14px; }
 .research-note p { margin: 0 0 12px; color: #9a9286; font-size: 11px; line-height: 1.58; }
 .research-note p span { display: block; margin-bottom: 4px; color: #9e927e; font-size: 7px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.research-note a { color: #b8a67f; text-decoration-color: rgba(215,185,121,.38); text-underline-offset: 3px; }
+.research-note a:hover { color: var(--gold); }
 
 .sequence-nav {
   min-height: 64px;
