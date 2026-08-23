@@ -12,6 +12,10 @@ type Scene = {
   english: string;
   overview?: string;
   shahNote?: string;
+  shaykhQuote?: {
+    text: string;
+    attribution: string;
+  };
   line: string;
   source: string;
   interpretation: string;
@@ -36,6 +40,10 @@ const SCENES: Scene[] = [
     english: 'Conscious breathing',
     overview: 'Safeguard inhalation, exhalation, and the interval between them from heedlessness, so the heart remains connected to the Divine Presence.',
     shahNote: 'He adds remembering and reaching toward subtle perception to the awareness of breathing.',
+    shaykhQuote: {
+      text: 'This Order is built on breath.',
+      attribution: 'Shah Naqshband ق',
+    },
     line: 'The whole sign visibly expands, rests, and gathers without losing its center.',
     source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
     interpretation: 'Layered waves of scale, luminosity, and circulation translate attention to breath without prescribing a breathing practice.',
@@ -48,6 +56,10 @@ const SCENES: Scene[] = [
     english: 'Watch your step',
     overview: 'Join gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence.',
     shahNote: 'He emphasizes awareness in action, watchfulness, and concentration.',
+    shaykhQuote: {
+      text: 'The gaze precedes the step and the step follows the gaze.',
+      attribution: 'Imam ar-Rabbani Ahmad al-Faruqi ق',
+    },
     line: 'Only the present position and its next relation come fully into view.',
     source: 'The principle concerns watchfulness and the step. No reviewed source assigns it to an enneagram path.',
     interpretation: 'The moving emphasis along the recurring number path is our visual proposal.',
@@ -72,6 +84,10 @@ const SCENES: Scene[] = [
     english: 'Solitude in the crowd',
     overview: 'Remain outwardly in companionship with people while the heart is inwardly present with God: true seclusion within the gathering.',
     shahNote: 'He describes “Solitude in Company” as detaching and reattaching consciousness.',
+    shaykhQuote: {
+      text: 'Our Way is Companionship, and Goodness is in the Gathering',
+      attribution: 'Shah Naqshband ق',
+    },
     line: 'The circumference circulates in many rhythms while the center stays undisturbed.',
     source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
     interpretation: 'Independent peripheral rhythms surround a constant center.',
@@ -95,6 +111,10 @@ const SCENES: Scene[] = [
     english: 'Restraint · returning',
     overview: 'Return to Allah in surrender, submission, and humility, with God as the seeker’s goal.',
     shahNote: 'He gives the contrasting rendering “restraint,” literally “pulling back.”',
+    shaykhQuote: {
+      text: 'When I reached Him I saw that His remembering of me preceded my remembrance of Him.',
+      attribution: 'Bayazid',
+    },
     line: 'The extended line pulls back through the order from which it came.',
     source: 'The principle holds both return and restraint, but no geometric assignment is established.',
     interpretation: 'A reversible drawing motion preserves both renderings without claiming to resolve them.',
@@ -106,6 +126,10 @@ const SCENES: Scene[] = [
     transliteration: 'Nigah dasht',
     english: 'Attentiveness',
     overview: 'Guard the heart from bad thoughts and low inclinations, so attention is not severed from the Divine.',
+    shaykhQuote: {
+      text: 'It has been 40 years that Allah has been looking at my heart and has seen no one except Himself.',
+      attribution: 'Abul Hassan al-Kharqani',
+    },
     line: 'Restlessness disperses the figure; sustained attention lets it align.',
     source: 'The sources describe watchfulness or attentiveness, but give no specific enneagram correspondence.',
     interpretation: 'Press-and-hold steadiness is our accessible interaction metaphor.',
@@ -1040,6 +1064,13 @@ export default function Home() {
                 <p className="shah-note"><span>Idries Shah adds</span>{scene.shahNote}</p>
               )}
             </aside>
+          )}
+
+          {scene.shaykhQuote && (
+            <figure className="shaykh-quote">
+              <blockquote>“{scene.shaykhQuote.text}”</blockquote>
+              <figcaption>— {scene.shaykhQuote.attribution} · <a href="https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/" target="_blank" rel="noreferrer">Source</a></figcaption>
+            </figure>
           )}
 
           <p className="scene-line">{scene.line}</p>
