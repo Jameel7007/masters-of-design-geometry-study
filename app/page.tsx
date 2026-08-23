@@ -596,6 +596,7 @@ export default function Home() {
 
   const scene = SCENES[sceneIndex];
   const nextScene = SCENES[(sceneIndex + 1) % SCENES.length];
+  const previousScene = SCENES[(sceneIndex - 1 + SCENES.length) % SCENES.length];
 
   if (!entered) {
     return (
@@ -707,7 +708,7 @@ export default function Home() {
       </header>
 
       <section className="scene-grid" aria-labelledby={`scene-${scene.slug}`}>
-        <div className="geometry-stage">
+        <div className="geometry-stage" key={`geometry-${scene.slug}`}>
           <div className="axis axis-v" aria-hidden="true" />
           <div className="axis axis-h" aria-hidden="true" />
           <p className="geometry-caption top">Generated from cx · cy · r · θ</p>
@@ -752,9 +753,10 @@ export default function Home() {
           )}
 
           {sceneIndex < SCENES.length - 1 && (
-            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)}>
-              <span>{sceneIndex === 0 ? 'Begin Principle 01' : `Continue to Principle ${nextScene.number}`}</span>
+            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)} aria-label={`Continue to ${nextScene.transliteration}: ${nextScene.english}`}>
+              <span>{sceneIndex === 0 ? 'Next · Begin Principle 01' : `Next · Principle ${nextScene.number}`}</span>
               <strong>{nextScene.transliteration}</strong>
+              <small>{nextScene.english}</small>
               <Arrow direction="right" />
             </button>
           )}
@@ -776,7 +778,7 @@ export default function Home() {
       </section>
 
       <nav className="sequence-nav" aria-label="Experience sequence">
-        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous principle or scene"><Arrow direction="left" /><span>Previous</span></button>
+        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label={`Previous: ${previousScene.transliteration}`}><Arrow direction="left" /><span>Previous</span></button>
         <div className="scene-track">
           {SCENES.map((item, index) => (
             <button
@@ -791,7 +793,13 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label="Next principle or scene"><span>{sceneIndex === SCENES.length - 1 ? 'Restart' : 'Next'}</span><Arrow direction="right" /></button>
+        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === SCENES.length - 1 ? 'Begin again at The Point' : `Next: ${nextScene.transliteration}`}>
+          <span className="nav-next-copy">
+            <small>{sceneIndex === SCENES.length - 1 ? 'Begin again' : 'Next principle'}</small>
+            <strong>{nextScene.transliteration}</strong>
+          </span>
+          <Arrow direction="right" />
+        </button>
       </nav>
 
       <p className="sr-only" aria-live="polite">Now showing {scene.transliteration}, {scene.english}.</p>
