@@ -140,12 +140,24 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 
 .geometry-stage { position: relative; min-height: 0; border-right: 1px solid var(--line); overflow: hidden; animation: geometry-change .7s cubic-bezier(.2,.7,.2,1) both; }
 .geometry-canvas { position: absolute; z-index: 2; inset: 0; display: block; width: 100%; height: 100%; }
+.geometry-stage.has-control .geometry-canvas { height: calc(100% - 58px); }
 .axis { position: absolute; z-index: 0; background: var(--line); pointer-events: none; }
 .axis-v { top: 4%; bottom: 4%; left: 50%; width: 1px; }
 .axis-h { left: 4%; right: 4%; top: 50%; height: 1px; }
+.geometry-stage.has-control .axis-v { bottom: calc(4% + 58px); }
+.geometry-stage.has-control .axis-h { top: calc((100% - 58px) / 2); }
 .geometry-caption { position: absolute; z-index: 3; margin: 0; color: #91897e; font-size: 8px; letter-spacing: .17em; text-transform: uppercase; pointer-events: none; }
 .geometry-caption.top { top: 24px; right: 28px; }
 .geometry-caption.bottom { bottom: 26px; left: 28px; }
+.geometry-stage.has-control .geometry-caption.bottom { bottom: 75px; }
+.geometry-interaction { position: absolute; z-index: 5; right: 0; bottom: 0; left: 0; min-height: 58px; display: flex; align-items: center; justify-content: center; padding: 7px 16px; border-top: 1px solid var(--line); background: rgba(12,12,11,.94); }
+.geometry-control { min-width: 220px; min-height: 43px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 11px; padding: 6px 18px; border: 1px solid rgba(215,185,121,.42); background: linear-gradient(100deg, rgba(215,185,121,.10), rgba(215,185,121,.025)); color: #c8bda9; text-align: left; cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+.geometry-control.hold { touch-action: none; }
+.geometry-control > span:last-child { display: block; }
+.geometry-control small, .geometry-control strong { display: block; }
+.geometry-control small { color: #948a7a; font-size: 7px; font-weight: 600; line-height: 1.25; letter-spacing: .14em; text-transform: uppercase; }
+.geometry-control strong { margin-top: 2px; color: #dacbae; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 14px; font-weight: 400; line-height: 1.15; }
+.geometry-control:hover, .geometry-control.active { border-color: rgba(215,185,121,.78); background: linear-gradient(100deg, rgba(215,185,121,.18), rgba(215,185,121,.045)); }
 
 .scene-panel {
   position: relative;
@@ -170,10 +182,9 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 .interaction-cue { display: flex; align-items: center; gap: 10px; max-width: 480px; margin: 22px 0 0; color: #91897e; font-size: 9px; line-height: 1.5; letter-spacing: .09em; text-transform: uppercase; }
 .interaction-cue span { color: var(--gold); font-size: 12px; }
 
-.ritual-control { align-self: flex-start; min-height: 46px; display: inline-flex; align-items: center; gap: 11px; margin-top: 22px; padding: 0 17px; border: 1px solid rgba(215,185,121,.3); background: rgba(215,185,121,.025); color: #b8aa91; font-size: 9px; letter-spacing: .13em; text-transform: uppercase; cursor: pointer; user-select: none; touch-action: manipulation; }
-.ritual-control:hover, .ritual-control.active { border-color: rgba(215,185,121,.65); color: #e1c98f; background: rgba(215,185,121,.06); }
 .control-pulse { width: 7px; height: 7px; border: 1px solid var(--gold); border-radius: 50%; }
-.ritual-control.active .control-pulse { background: var(--gold); box-shadow: 0 0 12px rgba(215,185,121,.5); }
+.geometry-control.active .control-pulse { background: var(--gold); box-shadow: 0 0 12px rgba(215,185,121,.5); }
+.geometry-control.time:not(.active) .control-pulse { animation: time-pulse 1.4s ease-in-out infinite; }
 
 .sequence-actions { width: min(100%, 680px); display: grid; grid-template-columns: minmax(138px, .42fr) minmax(0, 1fr); gap: 10px; margin-top: 26px; }
 .sequence-actions.single { grid-template-columns: minmax(0, 520px); }
@@ -236,6 +247,11 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 @keyframes advance-nudge {
   0%, 70%, 100% { transform: translateX(0); }
   82% { transform: translateX(4px); }
+}
+
+@keyframes time-pulse {
+  0%, 100% { background: transparent; box-shadow: none; }
+  50% { background: var(--gold); box-shadow: 0 0 11px rgba(215,185,121,.46); }
 }
 
 @media (min-width: 941px) and (max-width: 1220px) {
@@ -304,6 +320,9 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .scene-grid { grid-template-rows: minmax(320px, 46svh) auto; }
   .geometry-caption.top { top: 16px; right: 16px; }
   .geometry-caption.bottom { bottom: 17px; left: 16px; }
+  .geometry-stage.has-control .geometry-caption.bottom { bottom: 75px; }
+  .geometry-interaction { padding-inline: 10px; }
+  .geometry-control { min-width: 190px; min-height: 44px; padding-inline: 15px; }
   .scene-panel { min-height: 46svh; padding: 33px 22px 38px; }
   .scene-number { top: 25px; right: 18px; font-size: 102px; }
   .scene-kicker { font-size: 8px; }

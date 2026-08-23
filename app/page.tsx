@@ -122,10 +122,10 @@ const SCENES: Scene[] = [
     transliteration: 'Wuquf-i zamani',
     english: 'Pause of time',
     overview: 'Watch each moment for composure or heedlessness, recognizing presence and negligence, thanking God for good, and seeking forgiveness for lapses.',
-    line: 'Motion can stop while the evidence of duration remains.',
+    line: 'Turning rings make duration visible; one touch holds them at a single moment.',
     source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
     interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
-    cue: 'Pause and release the geometry’s time.',
+    cue: 'Use the control beneath the sign to pause the rings, then release them.',
   },
   {
     number: '10',
@@ -147,7 +147,7 @@ const SCENES: Scene[] = [
     line: 'The periphery yields to the smaller heart-triangle gathered around zero.',
     source: 'Bakhtiar directly supports the spiritual-heart triangle near the center. Its use as this culmination is conceptually adjacent.',
     interpretation: 'The staged recession from periphery to heart to point is our narrative composition.',
-    cue: 'Let the outer structure recede.',
+    cue: 'Watch the outer structure soften into the heart, then return.',
   },
   {
     number: '12',
@@ -195,6 +195,8 @@ function GeometryCanvas({
   reducedMotion: boolean;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const elapsedRef = useRef(0);
+  const elapsedSceneRef = useRef(sceneIndex);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -203,7 +205,11 @@ function GeometryCanvas({
     if (!context) return;
 
     let frame = 0;
-    let elapsed = reducedMotion ? 3200 : 0;
+    if (elapsedSceneRef.current !== sceneIndex) {
+      elapsedSceneRef.current = sceneIndex;
+      elapsedRef.current = 0;
+    }
+    let elapsed = reducedMotion ? 3200 : elapsedRef.current;
     let previous = performance.now();
     let width = 0;
     let height = 0;
@@ -222,7 +228,10 @@ function GeometryCanvas({
     const draw = (now: number) => {
       const delta = Math.min(40, now - previous);
       previous = now;
-      if (!paused && !reducedMotion) elapsed += delta;
+      if (!paused && !reducedMotion) {
+        elapsed += delta;
+        elapsedRef.current = elapsed;
+      }
 
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, width, height);
@@ -511,12 +520,30 @@ function GeometryCanvas({
         drawHeart(0.8, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.0011) * 0.08);
         drawCenter(1, 1.3);
       } else if (sceneIndex === 9) {
-        drawComplete(0.68);
+        const timeAngle = reducedMotion ? -Math.PI * 0.36 : elapsed * 0.00052;
+        drawComplete(0.48);
         for (let ring = 1; ring <= 3; ring += 1) {
+          const ringRadius = radius * (0.34 + ring * 0.14);
+          const direction = ring % 2 === 0 ? -1 : 1;
+          const start = -Math.PI / 2 + timeAngle * direction * (0.72 + ring * 0.16);
+          const arcLength = Math.PI * (0.26 + ring * 0.12);
           context.beginPath();
-          context.arc(cx, cy, radius * (0.38 + ring * 0.12), -Math.PI / 2, -Math.PI / 2 + Math.PI * (0.18 + ring * 0.1));
-          stroke('rgba(216, 187, 127, .30)', 0.8, 0.5);
+          context.arc(cx, cy, ringRadius, start, start + arcLength * direction, direction < 0);
+          stroke(ring === 2 ? 'rgba(236, 204, 143, .82)' : 'rgba(216, 193, 150, .58)', ring === 2 ? 1.25 : 0.9, 0.86);
+
+          const end = start + arcLength * direction;
+          context.beginPath();
+          context.arc(cx + Math.cos(end) * ringRadius, cy + Math.sin(end) * ringRadius, ring === 2 ? 3.5 : 2.6, 0, Math.PI * 2);
+          context.fillStyle = ring === 2 ? 'rgba(246, 216, 158, .98)' : 'rgba(224, 205, 169, .82)';
+          context.fill();
         }
+
+        const handRadius = radius * 0.76;
+        context.beginPath();
+        context.moveTo(cx, cy);
+        context.lineTo(cx + Math.cos(timeAngle - Math.PI / 2) * handRadius, cy + Math.sin(timeAngle - Math.PI / 2) * handRadius);
+        stroke('rgba(237, 205, 144, .70)', 1, 0.82);
+        drawCenter(1, paused ? 1.65 : 1.26);
       } else if (sceneIndex === 10) {
         drawDivisions(1);
         drawCircle(0.72);
@@ -526,15 +553,16 @@ function GeometryCanvas({
         drawCenter(1);
         drawZero(1);
       } else if (sceneIndex === 11) {
-        const cycle = reducedMotion ? 0.82 : smooth(clamp((elapsed % 6500) / 5200));
-        const peripheral = 0.58 * (1 - cycle) + 0.08;
+        const phase = reducedMotion ? 0.5 : (elapsed % 12000) / 12000;
+        const cycle = reducedMotion ? 0.82 : smooth((1 - Math.cos(phase * Math.PI * 2)) / 2);
+        const peripheral = 0.62 * (1 - cycle) + 0.10;
         drawDivisions(peripheral * 0.65);
         drawCircle(peripheral);
         drawPath(TRIANGLE, 'rgba(224, 191, 123, .70)', peripheral);
         drawPath(MOVEMENT, 'rgba(202, 190, 163, .60)', peripheral);
         drawPointsAndNumbers(peripheral, [], false);
-        drawHeart(0.72 + cycle * 0.28, 1 + Math.sin(elapsed * 0.0012) * 0.025);
-        drawCenter(1, 1.18);
+        drawHeart(0.68 + cycle * 0.32, 0.96 + cycle * 0.10);
+        drawCenter(1, 1.12 + cycle * 0.34);
         drawZero(0.95);
       } else {
         const reveal = reducedMotion ? 1 : smooth(clamp(elapsed / 6800));
@@ -783,12 +811,49 @@ export default function Home() {
       </nav>
 
       <section className="scene-grid" aria-labelledby={`scene-${scene.slug}`}>
-        <div className="geometry-stage" key={`geometry-${scene.slug}`}>
+        <div className={sceneIndex === 7 || sceneIndex === 9 ? 'geometry-stage has-control' : 'geometry-stage'} key={`geometry-${scene.slug}`}>
           <div className="axis axis-v" aria-hidden="true" />
           <div className="axis axis-h" aria-hidden="true" />
           <p className="geometry-caption top">Calculated from a center, radius, and angle.</p>
           <GeometryCanvas sceneIndex={sceneIndex} paused={paused} steady={steady} reducedMotion={reducedMotion} />
           <p className="geometry-caption bottom">Nine positions · 40° each</p>
+          {sceneIndex === 7 && (
+            <div className="geometry-interaction">
+              <button
+                type="button"
+                className={steady ? 'geometry-control hold active' : 'geometry-control hold'}
+                onPointerDown={(event) => {
+                  event.currentTarget.setPointerCapture(event.pointerId);
+                  setSteady(true);
+                }}
+                onPointerUp={(event) => {
+                  if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+                  setSteady(false);
+                }}
+                onPointerCancel={() => setSteady(false)}
+                onLostPointerCapture={() => setSteady(false)}
+                onContextMenu={(event) => event.preventDefault()}
+                onKeyDown={(event) => {
+                  if (event.key === ' ' || event.key === 'Enter') setSteady(true);
+                }}
+                onKeyUp={(event) => {
+                  if (event.key === ' ' || event.key === 'Enter') setSteady(false);
+                }}
+                aria-pressed={steady}
+              >
+                <span className="control-pulse" aria-hidden="true" />
+                <span><small>{steady ? 'Attention held' : 'Touch and hold'}</small><strong>{steady ? 'Geometry aligned' : 'Hold to steady'}</strong></span>
+              </button>
+            </div>
+          )}
+          {sceneIndex === 9 && (
+            <div className="geometry-interaction">
+              <button type="button" className={paused ? 'geometry-control time active' : 'geometry-control time'} onClick={() => setPaused((current) => !current)} aria-pressed={paused}>
+                <span className="control-pulse" aria-hidden="true" />
+                <span><small>{paused ? 'Time is held' : 'Time is moving'}</small><strong>{paused ? 'Resume the rings' : 'Pause the rings'}</strong></span>
+              </button>
+            </div>
+          )}
         </div>
 
         <article className="scene-panel" key={scene.slug}>
@@ -807,33 +872,6 @@ export default function Home() {
           <p className="scene-line">{scene.line}</p>
 
           <p className="interaction-cue"><span aria-hidden="true">◇</span>{scene.cue}</p>
-
-          {sceneIndex === 7 && (
-            <button
-              type="button"
-              className={steady ? 'ritual-control active' : 'ritual-control'}
-              onPointerDown={() => setSteady(true)}
-              onPointerUp={() => setSteady(false)}
-              onPointerCancel={() => setSteady(false)}
-              onPointerLeave={() => setSteady(false)}
-              onKeyDown={(event) => {
-                if (event.key === ' ' || event.key === 'Enter') setSteady(true);
-              }}
-              onKeyUp={(event) => {
-                if (event.key === ' ' || event.key === 'Enter') setSteady(false);
-              }}
-            >
-              <span className="control-pulse" aria-hidden="true" />
-              {steady ? 'Alignment held' : 'Hold to steady'}
-            </button>
-          )}
-
-          {sceneIndex === 9 && (
-            <button type="button" className={paused ? 'ritual-control active' : 'ritual-control'} onClick={() => setPaused((current) => !current)} aria-pressed={paused}>
-              <span className="control-pulse" aria-hidden="true" />
-              {paused ? 'Release time' : 'Pause time'}
-            </button>
-          )}
 
           <div className={sceneIndex === 0 ? 'sequence-actions single' : 'sequence-actions'} aria-label="Page navigation">
             {sceneIndex > 0 && (
