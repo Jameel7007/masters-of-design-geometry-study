@@ -654,7 +654,7 @@ export default function Home() {
                 <div className="dedication-card">
                   <span>Dedicated with love and reverence to</span>
                   <strong>Shaykh Abdullah al-Fa’iz ad-Daghestani <b>ق</b></strong>
-                  <p>1891–1973 · A master of the Naqshbandi Golden Chain whose teaching on the heart and the Nine Points forms the threshold of this work.</p>
+                  <p>The Red Sulfur among the saints, the Crystal Lamp of this Universe and its Foundation—an Ocean of Wisdom and a Luminary of Knowledge.</p>
                 </div>
                 <button type="button" className="intro-primary" onClick={() => setIntroStep(1)}>Continue to the five stations <Arrow direction="right" /></button>
               </div>
