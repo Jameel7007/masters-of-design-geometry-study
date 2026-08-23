@@ -100,7 +100,7 @@ Start in near darkness with only a point. Construct the sign from code in a legi
 
 ### Epilogue: Wajhullah
 
-The movement line, numbers, nine positions, circumference, and heart triangle become a nearly imperceptible afterimage around one luminous point. The scene discloses **Wajhullah - Sign of the Presence of God**. Bakhtiar uses this name for the whole Sufi Enneagram; applying it to the final disclosure is the experience’s narrative decision, not a claim that the word names the center point alone.
+One luminous point remains first. The complete Enneagram is then regenerated in dependency order: circumference, divisions, nine numbered positions, the 9-3-6 triangle, the 1-4-2-8-5-7 movement line, and the smaller heart triangle. The whole sign settles and holds as **Wajhullah - Sign of the Presence of God**. Bakhtiar uses this name for the whole Sufi Enneagram; the staged return is the experience’s narrative decision, not a claim that the word names the center point alone.
 
 ## Motion language
 

@@ -140,10 +140,10 @@ const SCENES: Scene[] = [
     slug: 'wajhullah',
     transliteration: 'Wajhullah',
     english: 'Sign of the Presence of God',
-    line: 'Line, number, circumference, and triangle become a single, quiet afterimage around the point.',
+    line: 'From the point, the complete sign returns: circumference, nine positions, both number paths, heart triangle, and center.',
     source: 'Bakhtiar uses Wajhullah for the Sufi Enneagram as a whole—not for the center point alone.',
-    interpretation: 'Naming the final disclosure Wajhullah completes our narrative arc while preserving that whole-symbol meaning.',
-    cue: 'Stay with the complete sign in its quietest state, or begin again.',
+    interpretation: 'The final scene resolves into the fully generated Enneagram and holds in stillness, preserving that whole-symbol meaning.',
+    cue: 'Watch the complete sign return, then remain with it in stillness.',
   },
 ];
 
@@ -484,13 +484,22 @@ function GeometryCanvas({
         drawCenter(1, 1.18);
         drawZero(0.95);
       } else {
-        const presence = reducedMotion ? 0.10 : 0.07 + (Math.sin(elapsed * 0.0008) + 1) * 0.035;
-        drawDivisions(presence * 0.65);
-        drawCircle(presence);
-        drawPath(TRIANGLE, 'rgba(224, 191, 123, .72)', presence * 1.15);
-        drawPath(MOVEMENT, 'rgba(202, 190, 163, .58)', presence);
-        drawHeart(0.16, 0.94);
-        drawCenter(1, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.001) * 0.08);
+        const reveal = reducedMotion ? 1 : smooth(clamp(elapsed / 6800));
+        const circleReveal = smooth((reveal - 0.08) / 0.18);
+        const divisionReveal = smooth((reveal - 0.20) / 0.18);
+        const pointReveal = smooth((reveal - 0.33) / 0.17);
+        const triangleReveal = smooth((reveal - 0.47) / 0.18);
+        const movementReveal = smooth((reveal - 0.60) / 0.26);
+        const heartReveal = smooth((reveal - 0.82) / 0.18);
+
+        drawCircle(circleReveal * 0.90);
+        drawDivisions(divisionReveal * 0.88);
+        drawPointsAndNumbers(pointReveal * 0.96);
+        drawPath(TRIANGLE, 'rgba(232, 199, 133, .98)', 1, triangleReveal, true, 1.28);
+        drawPath(MOVEMENT, 'rgba(216, 204, 179, .88)', 1, movementReveal, true, 1.12);
+        drawHeart(heartReveal, 1);
+        drawCenter(1, reducedMotion ? 1.16 : 1.16 + (1 - reveal) * 0.58);
+        drawZero(pointReveal);
       }
 
       frame = requestAnimationFrame(draw);
