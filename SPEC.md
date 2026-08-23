@@ -2,7 +2,7 @@
 
 ## Status
 
-**Interactive experience implemented after Gate 1 approval.** The accompanying build now carries the settled geometric engine through a prologue, eleven distinct Watches, and an epilogue while retaining explicit source / interpretation notes.
+**Interactive experience implemented after Gate 1 approval.** The accompanying build now carries the settled geometric engine through a prologue, eleven distinct Principles, and an epilogue while retaining explicit source / interpretation notes.
 
 The opening threshold now precedes the geometric sequence with three explicit steps: dedication, the five stations of the heart, and a selectable overview of all eleven principles.
 
@@ -82,7 +82,7 @@ This tests coordinate generation, graph order, resizing, and conceptual layer se
 
 Start in near darkness with only a point. Construct the sign from code in a legible sequence: point, circumference, divisions, positions, triangle, movement line. The future animation must reveal logical dependency rather than decorate the symbol.
 
-### The eleven Watches
+### The eleven Principles
 
 | # | Principle | Core interaction | Source / interpretation status |
 |---|---|---|---|
@@ -93,21 +93,21 @@ Start in near darkness with only a point. Construct the sign from code in a legi
 | 5 | Yad kard | Recurrence through the same center, gaining clarity | Interpretive; not a dhikr exercise |
 | 6 | Baz gasht | Extended paths pull back and return | Visual bridge between the two source renderings |
 | 7 | Nigah dasht | Movement disturbs; stillness / touch-hold realigns | Interpretive and gently usable |
-| 8 | Yad dasht | Transformation occurs while a center relation persists | Conceptually adjacent; behavior is interpretive |
+| 8 | Yad dasht | Orbiting arcs, moving lights, and rotating relations remain anchored by one unmoving center-thread | Conceptually adjacent; behavior is interpretive |
 | 9 | Wuquf-i zamani | Motion suspends and accumulated traces remain | Interpretive |
 | 10 | Wuquf-i adadi | Numerical skeleton replaces ornament | Math is Bakhtiar-supported; pairing is interpretive |
 | 11 | Wuquf-i qalbi | Periphery, numbers, and movement recede toward heart triangle and zero | Heart geometry is supported; culmination is interpretive |
 
-### Epilogue: Return
+### Epilogue: Wajhullah
 
-The movement line fades, then numbers, nine positions, circumference, and finally the heart triangle. One point remains. Hold the point before sources or navigation reappear.
+The movement line, numbers, nine positions, circumference, and heart triangle become a nearly imperceptible afterimage around one luminous point. The scene discloses **Wajhullah - Sign of the Presence of God**. Bakhtiar uses this name for the whole Sufi Enneagram; applying it to the final disclosure is the experience’s narrative decision, not a claim that the word names the center point alone.
 
 ## Motion language
 
 The full build should use one coherent vocabulary:
 
 - **breathe:** scale / luminosity variation below the threshold of spectacle;
-- **breathing revision:** the first Watch uses a visibly wider scale cycle, traveling luminosity, three propagating rings, heart-triangle expansion, and a stronger center pulse while remaining observational rather than instructional;
+- **breathing revision:** the first Principle uses a visibly wider scale cycle, traveling luminosity, three propagating rings, heart-triangle expansion, and a stronger center pulse while remaining observational rather than instructional;
 - **travel:** interpolation along existing radii and graph edges;
 - **remember:** recurrence with accumulated clarity;
 - **return:** reverse interpolation toward source coordinates;
@@ -208,8 +208,8 @@ Build only Hosh dar dam, Khalwat dar anjuman, and Wuquf-i adadi. Review meaning,
 
 ### Gate 4 - implemented
 
-Proceed to the remaining Watches, prologue, epilogue, source notes, accessibility, mobile, and performance only after Gate 3 approval.
+Proceed to the remaining Principles, prologue, epilogue, source notes, accessibility, mobile, and performance only after Gate 3 approval.
 
 ## Current implementation
 
-The current build includes the mathematical construction, eleven scene behaviors, keyboard and touch navigation, reduced-motion states, expandable source notes, a mobile-specific composition, and the final return to the point. Review should now assess both the settled geometry and whether each interpretive behavior communicates its principle without being mistaken for a traditional one-to-one mapping.
+The current build includes the mathematical construction, eleven scene behaviors, keyboard and touch navigation, reduced-motion states, expandable source notes, a mobile-specific composition, and the final Wajhullah disclosure. Review should now assess both the settled geometry and whether each interpretive behavior communicates its principle without being mistaken for a traditional one-to-one mapping.

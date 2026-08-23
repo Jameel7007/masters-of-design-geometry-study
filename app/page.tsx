@@ -100,10 +100,10 @@ const SCENES: Scene[] = [
     slug: 'yad-dasht',
     transliteration: 'Yad dasht',
     english: 'Recollection',
-    line: 'Relationships shift around an unbroken thread through the center.',
+    line: 'Relationships orbit, reverse, and reconfigure around an unbroken thread through the center.',
     source: 'Bakhtiar’s center as unitary focus is directly supported; using it for this principle is conceptually adjacent.',
-    interpretation: 'The persistent center-thread carries continuity through change.',
-    cue: 'Keep attention on what does not turn.',
+    interpretation: 'The persistent center-thread anchors a continuously moving field of arcs, points, and rotating relations.',
+    cue: 'Follow the moving light while keeping attention on what does not turn.',
   },
   {
     number: '09',
@@ -137,13 +137,13 @@ const SCENES: Scene[] = [
   },
   {
     number: '12',
-    slug: 'return',
-    transliteration: 'Return',
-    english: 'Epilogue',
-    line: 'Line, number, circumference, and triangle withdraw. One point remains.',
-    source: 'This closing order is not presented as a traditional sequence.',
-    interpretation: 'It completes the experience’s arc: point → construction → multiplicity → attention → point.',
-    cue: 'Stay with the point, or begin again.',
+    slug: 'wajhullah',
+    transliteration: 'Wajhullah',
+    english: 'Sign of the Presence of God',
+    line: 'Line, number, circumference, and triangle become a single, quiet afterimage around the point.',
+    source: 'Bakhtiar uses Wajhullah for the Sufi Enneagram as a whole—not for the center point alone.',
+    interpretation: 'Naming the final disclosure Wajhullah completes our narrative arc while preserving that whole-symbol meaning.',
+    cue: 'Stay with the complete sign in its quietest state, or begin again.',
   },
 ];
 
@@ -220,7 +220,7 @@ function GeometryCanvas({
         ? (Math.sin(elapsed * 0.00095 - Math.PI / 2) + 1) / 2
         : 0.5;
       const breath = sceneIndex === 1 ? 0.965 + breathWave * 0.075 : 1;
-      const rotation = sceneIndex === 8 ? Math.sin(elapsed * 0.00032) * 0.075 : 0;
+      const rotation = sceneIndex === 8 && !reducedMotion ? Math.sin(elapsed * 0.00046) * 0.145 : 0;
       const instability = sceneIndex === 7 && !reducedMotion ? (steady ? 0.15 : 1) : 0;
       const radius = baseRadius * breath;
       const points = new Map<number, Point>();
@@ -432,12 +432,31 @@ function GeometryCanvas({
         drawComplete(steady ? 0.92 : 0.66);
         if (steady) drawCircle(0.44, 1.025);
       } else if (sceneIndex === 8) {
-        drawComplete(0.64, false);
+        const orbit = reducedMotion ? 0.35 : elapsed * 0.00038;
+        drawComplete(0.56, false);
+        for (let ring = 0; ring < 3; ring += 1) {
+          const ringRadius = radius * (0.38 + ring * 0.19);
+          const start = orbit * (ring % 2 === 0 ? 1 : -1) + ring * 1.7;
+          context.beginPath();
+          context.arc(cx, cy, ringRadius, start, start + Math.PI * (0.26 + ring * 0.08));
+          stroke('rgba(220, 192, 135, .54)', 0.9, 0.72);
+          const pointAngle = start + Math.PI * (0.26 + ring * 0.08);
+          context.beginPath();
+          context.arc(cx + Math.cos(pointAngle) * ringRadius, cy + Math.sin(pointAngle) * ringRadius, 2.6, 0, Math.PI * 2);
+          context.fillStyle = 'rgba(240, 211, 153, .9)';
+          context.fill();
+        }
         context.beginPath();
         context.moveTo(cx, cy - radius * 1.02);
         context.lineTo(cx, cy + radius * 1.02);
         stroke('rgba(236, 205, 145, .90)', 1.1, 1);
-        drawCenter(1);
+        const threadPhase = reducedMotion ? 0.5 : (Math.sin(elapsed * 0.00105 - Math.PI / 2) + 1) / 2;
+        context.beginPath();
+        context.arc(cx, cy - radius + threadPhase * radius * 2, 3.4, 0, Math.PI * 2);
+        context.fillStyle = 'rgba(246, 219, 161, .96)';
+        context.fill();
+        drawHeart(0.8, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.0011) * 0.08);
+        drawCenter(1, 1.3);
       } else if (sceneIndex === 9) {
         drawComplete(0.68);
         for (let ring = 1; ring <= 3; ring += 1) {
@@ -465,8 +484,13 @@ function GeometryCanvas({
         drawCenter(1, 1.18);
         drawZero(0.95);
       } else {
-        drawHeart(0.12, 0.94);
-        drawCenter(1, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.001) * 0.06);
+        const presence = reducedMotion ? 0.10 : 0.07 + (Math.sin(elapsed * 0.0008) + 1) * 0.035;
+        drawDivisions(presence * 0.65);
+        drawCircle(presence);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .72)', presence * 1.15);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .58)', presence);
+        drawHeart(0.16, 0.94);
+        drawCenter(1, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.001) * 0.08);
       }
 
       frame = requestAnimationFrame(draw);
@@ -569,7 +593,7 @@ export default function Home() {
           <div className="mark" aria-hidden="true">MD</div>
           <div className="identity">
             <p className="overline">Masters of the Design</p>
-            <p className="status">An introduction to the Eleven Watches</p>
+            <p className="status">An introduction to the Eleven Principles</p>
           </div>
           <button type="button" className="intro-skip" onClick={() => enterAt(0)}>Enter experience <Arrow direction="right" /></button>
         </header>
@@ -581,7 +605,7 @@ export default function Home() {
                 <GeometryCanvas sceneIndex={0} paused={false} steady={false} reducedMotion={reducedMotion} />
               </div>
               <div className="intro-copy-block">
-                <p className="intro-kicker">A threshold before the Watches</p>
+                <p className="intro-kicker">A threshold before the Principles</p>
                 <h1>One sign.<br />Eleven ways of attention.</h1>
                 <p className="intro-dek">A mathematically generated Sufi Enneagram becomes a field for eleven Naqshbandi principles. The geometry is sourced; the responsive motions are a contemporary interpretation.</p>
                 <div className="dedication-card">
@@ -682,7 +706,7 @@ export default function Home() {
 
         <article className="scene-panel" key={scene.slug}>
           <div className="scene-number" aria-hidden="true">{scene.number}</div>
-          <p className="scene-kicker">Watch {scene.number}</p>
+          <p className="scene-kicker">{sceneIndex === 0 ? 'Prologue' : sceneIndex === SCENES.length - 1 ? 'Epilogue' : `Principle ${scene.number}`}</p>
           <h1 id={`scene-${scene.slug}`}>{scene.transliteration}</h1>
           <p className="english">{scene.english}</p>
           <p className="scene-line">{scene.line}</p>
@@ -718,7 +742,7 @@ export default function Home() {
 
           {sceneIndex < SCENES.length - 1 && (
             <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)}>
-              <span>{sceneIndex === 0 ? 'Begin the first Watch' : `Continue to Watch ${nextScene.number}`}</span>
+              <span>{sceneIndex === 0 ? 'Begin Principle 01' : `Continue to Principle ${nextScene.number}`}</span>
               <strong>{nextScene.transliteration}</strong>
               <Arrow direction="right" />
             </button>
@@ -741,7 +765,7 @@ export default function Home() {
       </section>
 
       <nav className="sequence-nav" aria-label="Experience sequence">
-        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous watch"><Arrow direction="left" /><span>Previous</span></button>
+        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous principle or scene"><Arrow direction="left" /><span>Previous</span></button>
         <div className="scene-track">
           {SCENES.map((item, index) => (
             <button
@@ -756,7 +780,7 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label="Next watch"><span>{sceneIndex === SCENES.length - 1 ? 'Restart' : 'Next'}</span><Arrow direction="right" /></button>
+        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label="Next principle or scene"><span>{sceneIndex === SCENES.length - 1 ? 'Restart' : 'Next'}</span><Arrow direction="right" /></button>
       </nav>
 
       <p className="sr-only" aria-live="polite">Now showing {scene.transliteration}, {scene.english}.</p>

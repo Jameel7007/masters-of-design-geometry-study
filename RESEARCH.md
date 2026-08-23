@@ -15,8 +15,11 @@ The proposed one-principle/one-interaction overlay is a third layer: **our conte
 
 Primary source: Laleh Bakhtiar, *The Sufi Enneagram: The Secrets of the Symbol Unveiled* (2013), checked directly against the supplied PDF.
 
+**Name of the symbol:** the book’s title page identifies the Sufi Enneagram as the **“Sign of the Presence of God (Wajhullah).”** In the introduction, the spaced form *wajh Allah* is also used for the Enneagram as a whole. The final scene may disclose this name, but should not imply that Bakhtiar applies it only to the center point.
+
 Relevant printed pages (PDF page numbers in parentheses):
 
+- **Title page and p. 6 (PDF 54):** the Sufi Enneagram as the Sign of the Presence of God, *Wajhullah / wajh Allah*.
 - **p. 14 (PDF 62):** macrocosm / microcosm; outward and inward movement; movement toward the center and away toward the circumference.
 - **pp. 28-30 (PDF 76-78):** breath as rhythm in time; breath-spirit as movement; the line of spirit / movement / change; spatial and architectural continuity.
 - **pp. 55-56 (PDF 103-104):** the recurring 1/7 decimal; 1, 4, 2, 8, 5, 7; 3, 6, 9; zero; the line of change / movement / spirit.
