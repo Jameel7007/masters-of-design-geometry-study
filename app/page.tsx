@@ -743,6 +743,27 @@ export default function Home() {
         </div>
       </header>
 
+      <nav className="sequence-nav" aria-label="Experience sequence">
+        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label={`Previous: ${previousScene.transliteration}`}><Arrow direction="left" /><span>Previous</span></button>
+        <div className="scene-track">
+          {SCENES.map((item, index) => (
+            <button
+              key={item.slug}
+              type="button"
+              className={index === sceneIndex ? 'track-point active' : 'track-point'}
+              aria-label={`Go to ${item.transliteration}: ${item.english}`}
+              aria-current={index === sceneIndex ? 'step' : undefined}
+              onClick={() => goTo(index)}
+            >
+              <span>{item.number}</span>
+            </button>
+          ))}
+        </div>
+        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === SCENES.length - 1 ? 'Begin again at The Point' : `Next: ${nextScene.transliteration}`}>
+          <Arrow direction="right" />
+        </button>
+      </nav>
+
       <section className="scene-grid" aria-labelledby={`scene-${scene.slug}`}>
         <div className="geometry-stage" key={`geometry-${scene.slug}`}>
           <div className="axis axis-v" aria-hidden="true" />
@@ -824,27 +845,6 @@ export default function Home() {
           </details>
         </article>
       </section>
-
-      <nav className="sequence-nav" aria-label="Experience sequence">
-        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label={`Previous: ${previousScene.transliteration}`}><Arrow direction="left" /><span>Previous</span></button>
-        <div className="scene-track">
-          {SCENES.map((item, index) => (
-            <button
-              key={item.slug}
-              type="button"
-              className={index === sceneIndex ? 'track-point active' : 'track-point'}
-              aria-label={`Go to ${item.transliteration}: ${item.english}`}
-              aria-current={index === sceneIndex ? 'step' : undefined}
-              onClick={() => goTo(index)}
-            >
-              <span>{item.number}</span>
-            </button>
-          ))}
-        </div>
-        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === SCENES.length - 1 ? 'Begin again at The Point' : `Next: ${nextScene.transliteration}`}>
-          <Arrow direction="right" />
-        </button>
-      </nav>
 
       <p className="sr-only" aria-live="polite">Now showing {scene.transliteration}, {scene.english}.</p>
     </main>
