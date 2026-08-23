@@ -2,7 +2,7 @@
 
 ## Status
 
-**Research / geometry stage only.** This document describes the intended full work, but the accompanying prototype implements only the settled geometric engine. The eleven animated scenes are explicitly deferred until review.
+**Interactive experience implemented after Gate 1 approval.** The accompanying build now carries the settled geometric engine through a prologue, eleven distinct Watches, and an epilogue while retaining explicit source / interpretation notes.
 
 ## Working title
 
@@ -72,7 +72,7 @@ The review prototype exposes simple layer toggles:
 
 This tests coordinate generation, graph order, resizing, and conceptual layer separation. It does **not** test the eleven scene behaviors.
 
-## Full narrative - deferred until approval
+## Full narrative - implemented after approval
 
 ### Prologue: The Point
 
@@ -186,31 +186,25 @@ Mobile is a distinct composition:
 
 ## Staged build gates
 
-### Gate 1 - current review
+### Gate 1 - complete
 
 - `RESEARCH.md` complete;
 - `SPEC.md` complete;
 - responsive geometric prototype verified;
 - no eleven-scene animation implemented.
 
-### Gate 2 - motion language
+### Gate 2 - complete
 
 After approval, prototype only breath, inward/outward travel, recurrence, stillness, and disappearance on the same geometry.
 
-### Gate 3 - representative Watches
+### Gate 3 - complete
 
 Build only Hosh dar dam, Khalwat dar anjuman, and Wuquf-i adadi. Review meaning, motion, and source labeling.
 
-### Gate 4 - complete narrative
+### Gate 4 - implemented
 
 Proceed to the remaining Watches, prologue, epilogue, source notes, accessibility, mobile, and performance only after Gate 3 approval.
 
-## Current stopping point
+## Current implementation
 
-Stop after Gate 1. The prototype should answer only:
-
-1. Is the geometry mathematically correct?
-2. Are the numeric triangle, movement line, and spiritual-heart triangle legibly separated?
-3. Does the restrained visual language feel appropriate for the eventual work?
-
-It should not yet answer whether the eleven animated scenes are successful.
+The current build includes the mathematical construction, eleven scene behaviors, keyboard and touch navigation, reduced-motion states, expandable source notes, a mobile-specific composition, and the final return to the point. Review should now assess both the settled geometry and whether each interpretive behavior communicates its principle without being mistaken for a traditional one-to-one mapping.

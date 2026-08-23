@@ -1,30 +1,176 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-type LayerKey = 'center' | 'circle' | 'divisions' | 'triangle' | 'movement' | 'numbers' | 'heart';
-
-const LAYER_LABELS: Record<LayerKey, string> = {
-  center: 'Center / zero',
-  circle: 'Circumference',
-  divisions: '40° divisions',
-  triangle: '9 / 3 / 6 triangle',
-  movement: '1 / 4 / 2 / 8 / 5 / 7 line',
-  numbers: 'Number labels',
-  heart: 'Spiritual-heart triangle',
+type Scene = {
+  number: string;
+  slug: string;
+  transliteration: string;
+  english: string;
+  line: string;
+  source: string;
+  interpretation: string;
+  cue: string;
 };
 
-const INITIAL_LAYERS: Record<LayerKey, boolean> = {
-  center: true,
-  circle: true,
-  divisions: true,
-  triangle: true,
-  movement: true,
-  numbers: true,
-  heart: true,
-};
+const SCENES: Scene[] = [
+  {
+    number: '00',
+    slug: 'the-point',
+    transliteration: 'The Point',
+    english: 'Prologue',
+    line: 'A center becomes a circumference, nine positions, and two number paths.',
+    source: 'Bakhtiar directly supports zero, center and circumference, nine 40° divisions, three 120° regions, and the two number sequences.',
+    interpretation: 'Revealing those dependencies as a timed construction is the experience’s narrative device.',
+    cue: 'Watch the sign assemble, then move forward.',
+  },
+  {
+    number: '01',
+    slug: 'hosh-dar-dam',
+    transliteration: 'Hosh dar dam',
+    english: 'Conscious breathing',
+    line: 'The whole sign expands and gathers without losing its center.',
+    source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
+    interpretation: 'A restrained change of scale and luminosity translates attention to breath without prescribing a breathing practice.',
+    cue: 'Notice the interval between expansion and return.',
+  },
+  {
+    number: '02',
+    slug: 'nazar-bar-qadam',
+    transliteration: 'Nazar bar qadam',
+    english: 'Watch your step',
+    line: 'Only the present position and its next relation come fully into view.',
+    source: 'The principle concerns watchfulness and the step. No reviewed source assigns it to an enneagram path.',
+    interpretation: 'The moving emphasis along the recurring number path is our visual proposal.',
+    cue: 'Follow one relation at a time.',
+  },
+  {
+    number: '03',
+    slug: 'safar-dar-watan',
+    transliteration: 'Safar dar watan',
+    english: 'Journey homeward',
+    line: 'Movement crosses the rim, enters the sign, and approaches zero.',
+    source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
+    interpretation: 'The traveling point makes that inward relation spatial and visible.',
+    cue: 'Trace the passage from circumference to center.',
+  },
+  {
+    number: '04',
+    slug: 'khalwat-dar-anjuman',
+    transliteration: 'Khalwat dar anjuman',
+    english: 'Solitude in the crowd',
+    line: 'The circumference remains active while the center stays undisturbed.',
+    source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
+    interpretation: 'Independent peripheral rhythms surround a constant center.',
+    cue: 'Let the moving edge and still center coexist.',
+  },
+  {
+    number: '05',
+    slug: 'yad-kard',
+    transliteration: 'Yad kard',
+    english: 'Essential remembrance',
+    line: 'The same path returns, each recurrence leaving a little more clarity.',
+    source: 'No reviewed source establishes a one-to-one geometric correspondence for this principle.',
+    interpretation: 'Repeated passage through the generated path is our metaphor for remembrance, not a devotional instruction.',
+    cue: 'Notice what repetition retains.',
+  },
+  {
+    number: '06',
+    slug: 'baz-gasht',
+    transliteration: 'Baz gasht',
+    english: 'Restraint · returning',
+    line: 'The extended line pulls back through the order from which it came.',
+    source: 'Shah renders the term as restraint or pulling back; the expanded Naqshbandi source emphasizes returning. No geometric assignment is established.',
+    interpretation: 'A reversible drawing motion preserves both renderings without claiming to resolve them.',
+    cue: 'Watch extension become return.',
+  },
+  {
+    number: '07',
+    slug: 'nigah-dasht',
+    transliteration: 'Nigah dasht',
+    english: 'Attentiveness',
+    line: 'Restlessness disperses the figure; sustained attention lets it align.',
+    source: 'The sources describe watchfulness or attentiveness, but give no specific enneagram correspondence.',
+    interpretation: 'Press-and-hold steadiness is our accessible interaction metaphor.',
+    cue: 'Press and hold the control to steady the sign.',
+  },
+  {
+    number: '08',
+    slug: 'yad-dasht',
+    transliteration: 'Yad dasht',
+    english: 'Recollection',
+    line: 'Relationships shift around an unbroken thread through the center.',
+    source: 'Bakhtiar’s center as unitary focus is directly supported; using it for this principle is conceptually adjacent.',
+    interpretation: 'The persistent center-thread carries continuity through change.',
+    cue: 'Keep attention on what does not turn.',
+  },
+  {
+    number: '09',
+    slug: 'wuquf-i-zamani',
+    transliteration: 'Wuquf-i zamani',
+    english: 'Pause of time',
+    line: 'Motion can stop while the evidence of duration remains.',
+    source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
+    interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
+    cue: 'Pause and release the geometry’s time.',
+  },
+  {
+    number: '10',
+    slug: 'wuquf-i-adadi',
+    transliteration: 'Wuquf-i adadi',
+    english: 'Pause of numbers',
+    line: 'Ornament recedes. The exact numerical skeleton remains.',
+    source: 'The nine divisions, 3 / 6 / 9 triangle, zero, and 1 / 4 / 2 / 8 / 5 / 7 line are directly supported by Bakhtiar.',
+    interpretation: 'Pairing this mathematical disclosure with the principle is our interpretation.',
+    cue: 'Read the sign as number and relation.',
+  },
+  {
+    number: '11',
+    slug: 'wuquf-i-qalbi',
+    transliteration: 'Wuquf-i qalbi',
+    english: 'Pause of the heart',
+    line: 'The periphery yields to the smaller heart-triangle gathered around zero.',
+    source: 'Bakhtiar directly supports the spiritual-heart triangle near the center. Its use as this culmination is conceptually adjacent.',
+    interpretation: 'The staged recession from periphery to heart to point is our narrative composition.',
+    cue: 'Let the outer structure recede.',
+  },
+  {
+    number: '12',
+    slug: 'return',
+    transliteration: 'Return',
+    english: 'Epilogue',
+    line: 'Line, number, circumference, and triangle withdraw. One point remains.',
+    source: 'This closing order is not presented as a traditional sequence.',
+    interpretation: 'It completes the experience’s arc: point → construction → multiplicity → attention → point.',
+    cue: 'Stay with the point, or begin again.',
+  },
+];
 
-function GeometryCanvas({ layers }: { layers: Record<LayerKey, boolean> }) {
+const MOVEMENT = [1, 4, 2, 8, 5, 7];
+const TRIANGLE = [9, 3, 6];
+
+type Point = { x: number; y: number; angle: number };
+
+function clamp(value: number, min = 0, max = 1) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function smooth(value: number) {
+  const x = clamp(value);
+  return x * x * (3 - 2 * x);
+}
+
+function GeometryCanvas({
+  sceneIndex,
+  paused,
+  steady,
+  reducedMotion,
+}: {
+  sceneIndex: number;
+  paused: boolean;
+  steady: boolean;
+  reducedMotion: boolean;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -33,69 +179,97 @@ function GeometryCanvas({ layers }: { layers: Record<LayerKey, boolean> }) {
     const context = canvas.getContext('2d');
     if (!context) return;
 
-    const draw = () => {
+    let frame = 0;
+    let elapsed = reducedMotion ? 3200 : 0;
+    let previous = performance.now();
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    const resize = () => {
       const bounds = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = bounds.width;
-      const height = bounds.height;
+      width = Math.max(1, bounds.width);
+      height = Math.max(1, bounds.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    const draw = (now: number) => {
+      const delta = Math.min(40, now - previous);
+      previous = now;
+      if (!paused && !reducedMotion) elapsed += delta;
+
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, width, height);
 
       const cx = width / 2;
       const cy = height / 2;
-      const radius = Math.min(width, height) * 0.34;
-      const points = new Map<number, { x: number; y: number; angle: number }>();
+      const baseRadius = Math.min(width * 0.405, height * 0.39);
+      const breath = sceneIndex === 1 ? 1 + Math.sin(elapsed * 0.00135) * 0.014 : 1;
+      const rotation = sceneIndex === 8 ? Math.sin(elapsed * 0.00032) * 0.075 : 0;
+      const instability = sceneIndex === 7 && !reducedMotion ? (steady ? 0.15 : 1) : 0;
+      const radius = baseRadius * breath;
+      const points = new Map<number, Point>();
 
       for (let number = 1; number <= 9; number += 1) {
         const step = number === 9 ? 0 : number;
-        const angle = -Math.PI / 2 + step * (Math.PI * 2 / 9);
+        const angle = -Math.PI / 2 + step * (Math.PI * 2 / 9) + rotation;
+        const wobble = instability * Math.sin(elapsed * 0.006 + number * 1.9) * Math.min(7, radius * 0.018);
         points.set(number, {
-          x: cx + Math.cos(angle) * radius,
-          y: cy + Math.sin(angle) * radius,
+          x: cx + Math.cos(angle) * (radius + wobble),
+          y: cy + Math.sin(angle) * (radius + wobble),
           angle,
         });
       }
 
-      const path = (sequence: number[], color: string, widthValue: number) => {
-        context.beginPath();
-        sequence.forEach((number, index) => {
-          const point = points.get(number)!;
-          if (index === 0) context.moveTo(point.x, point.y);
-          else context.lineTo(point.x, point.y);
-        });
-        context.closePath();
+      const stroke = (color: string, lineWidth: number, alpha = 1) => {
         context.strokeStyle = color;
-        context.lineWidth = widthValue;
+        context.globalAlpha = clamp(alpha);
+        context.lineWidth = lineWidth;
         context.stroke();
+        context.globalAlpha = 1;
       };
 
-      if (layers.divisions) {
+      const drawCircle = (alpha = 1, scale = 1) => {
+        context.beginPath();
+        context.arc(cx, cy, radius * scale, 0, Math.PI * 2);
+        stroke('rgba(226, 217, 199, .68)', 1, alpha);
+      };
+
+      const drawDivisions = (alpha = 1) => {
         for (let index = 0; index < 9; index += 1) {
-          const angle = -Math.PI / 2 + index * (Math.PI * 2 / 9);
+          const angle = -Math.PI / 2 + index * (Math.PI * 2 / 9) + rotation;
           context.beginPath();
           context.moveTo(cx, cy);
           context.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
-          context.strokeStyle = index % 3 === 0 ? 'rgba(216, 187, 127, .22)' : 'rgba(220, 211, 194, .075)';
-          context.lineWidth = index % 3 === 0 ? 1 : 0.75;
-          context.stroke();
+          stroke(index % 3 === 0 ? 'rgba(216, 187, 127, .30)' : 'rgba(220, 211, 194, .10)', index % 3 === 0 ? 1 : 0.75, alpha);
         }
-      }
+      };
 
-      if (layers.circle) {
+      const drawPath = (sequence: number[], color: string, alpha = 1, progress = 1, close = true, lineWidth = 1) => {
+        const pathPoints = sequence.map((number) => points.get(number)!);
+        if (close) pathPoints.push(pathPoints[0]);
+        const segmentCount = pathPoints.length - 1;
+        const amount = clamp(progress) * segmentCount;
+        const completeSegments = Math.floor(amount);
+        const remainder = amount - completeSegments;
         context.beginPath();
-        context.arc(cx, cy, radius, 0, Math.PI * 2);
-        context.strokeStyle = 'rgba(225, 216, 198, .56)';
-        context.lineWidth = 1;
-        context.stroke();
-      }
+        context.moveTo(pathPoints[0].x, pathPoints[0].y);
+        for (let index = 0; index < completeSegments; index += 1) {
+          context.lineTo(pathPoints[index + 1].x, pathPoints[index + 1].y);
+        }
+        if (completeSegments < segmentCount && remainder > 0) {
+          const from = pathPoints[completeSegments];
+          const to = pathPoints[completeSegments + 1];
+          context.lineTo(from.x + (to.x - from.x) * remainder, from.y + (to.y - from.y) * remainder);
+        }
+        stroke(color, lineWidth, alpha);
+      };
 
-      if (layers.triangle) path([9, 3, 6], 'rgba(224, 191, 123, .82)', 1.15);
-      if (layers.movement) path([1, 4, 2, 8, 5, 7], 'rgba(202, 190, 163, .62)', 1);
-
-      if (layers.heart) {
-        const heartRadius = radius * 0.155;
+      const drawHeart = (alpha = 1, scale = 1) => {
+        const heartRadius = radius * 0.155 * scale;
         context.beginPath();
         for (let index = 0; index < 3; index += 1) {
           const angle = -Math.PI / 2 + index * (Math.PI * 2 / 3);
@@ -105,139 +279,350 @@ function GeometryCanvas({ layers }: { layers: Record<LayerKey, boolean> }) {
           else context.lineTo(x, y);
         }
         context.closePath();
-        context.strokeStyle = 'rgba(234, 207, 151, .96)';
-        context.lineWidth = 1.35;
-        context.stroke();
-      }
+        stroke('rgba(235, 205, 143, .98)', 1.3, alpha);
+      };
 
-      if (layers.circle || layers.triangle || layers.movement || layers.numbers) {
-        points.forEach((point, number) => {
-          context.beginPath();
-          context.arc(point.x, point.y, number % 3 === 0 ? 2.8 : 2.05, 0, Math.PI * 2);
-          context.fillStyle = number % 3 === 0 ? 'rgba(236, 208, 151, .96)' : 'rgba(221, 210, 186, .74)';
-          context.fill();
-
-          if (layers.numbers) {
-            const labelRadius = radius * 1.11;
-            context.font = `${Math.max(10, radius * 0.045)}px ui-monospace, SFMono-Regular, Menlo, monospace`;
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.fillStyle = number % 3 === 0 ? 'rgba(239, 211, 155, .9)' : 'rgba(178, 169, 150, .78)';
-            context.fillText(String(number), cx + Math.cos(point.angle) * labelRadius, cy + Math.sin(point.angle) * labelRadius);
-          }
-        });
-      }
-
-      if (layers.center) {
-        const glow = context.createRadialGradient(cx, cy, 0, cx, cy, 24);
-        glow.addColorStop(0, 'rgba(231, 199, 135, .28)');
+      const drawCenter = (alpha = 1, pulse = 1) => {
+        const glowRadius = Math.max(18, radius * 0.075) * pulse;
+        const glow = context.createRadialGradient(cx, cy, 0, cx, cy, glowRadius);
+        glow.addColorStop(0, `rgba(231, 199, 135, ${0.28 * alpha})`);
         glow.addColorStop(1, 'rgba(231, 199, 135, 0)');
         context.fillStyle = glow;
-        context.fillRect(cx - 26, cy - 26, 52, 52);
+        context.fillRect(cx - glowRadius, cy - glowRadius, glowRadius * 2, glowRadius * 2);
         context.beginPath();
-        context.arc(cx, cy, 2.35, 0, Math.PI * 2);
-        context.fillStyle = 'rgba(246, 224, 178, .98)';
+        context.arc(cx, cy, 2.4, 0, Math.PI * 2);
+        context.fillStyle = `rgba(247, 225, 180, ${alpha})`;
         context.fill();
-        if (layers.numbers) {
-          context.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
-          context.textAlign = 'center';
-          context.fillStyle = 'rgba(229, 201, 145, .82)';
-          context.fillText('0', cx, cy + 17);
+      };
+
+      const drawPointsAndNumbers = (alpha = 1, highlights: number[] = [], numbers = true) => {
+        points.forEach((point, number) => {
+          const highlighted = highlights.includes(number);
+          context.beginPath();
+          context.arc(point.x, point.y, highlighted ? 4.2 : number % 3 === 0 ? 2.8 : 2, 0, Math.PI * 2);
+          context.fillStyle = highlighted || number % 3 === 0 ? 'rgba(237, 208, 149, .98)' : 'rgba(220, 210, 188, .76)';
+          context.globalAlpha = alpha;
+          context.fill();
+          context.globalAlpha = 1;
+
+          if (numbers) {
+            const labelRadius = radius * 1.085;
+            const lowerHalf = Math.max(0, Math.sin(point.angle));
+            const bottomLift = lowerHalf * Math.min(18, radius * 0.062);
+            const labelX = cx + Math.cos(point.angle) * labelRadius;
+            const labelY = cy + Math.sin(point.angle) * labelRadius - bottomLift;
+            context.font = `${Math.max(10, Math.min(13, radius * 0.045))}px ui-monospace, SFMono-Regular, Menlo, monospace`;
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillStyle = highlighted || number % 3 === 0 ? 'rgba(239, 211, 155, .94)' : 'rgba(180, 171, 151, .82)';
+            context.globalAlpha = alpha;
+            context.fillText(String(number), labelX, labelY);
+            context.globalAlpha = 1;
+          }
+        });
+      };
+
+      const drawZero = (alpha = 1) => {
+        context.font = '10px ui-monospace, SFMono-Regular, Menlo, monospace';
+        context.textAlign = 'center';
+        context.fillStyle = `rgba(229, 201, 145, ${0.82 * alpha})`;
+        context.fillText('0', cx, cy + 18);
+      };
+
+      const drawComplete = (alpha = 1, numbers = true) => {
+        drawDivisions(alpha * 0.85);
+        drawCircle(alpha);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .88)', alpha, 1, true, 1.15);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .72)', alpha, 1, true, 1);
+        drawHeart(alpha);
+        drawPointsAndNumbers(alpha, [], numbers);
+        drawCenter(alpha);
+        if (numbers) drawZero(alpha);
+      };
+
+      if (sceneIndex === 0) {
+        const progress = reducedMotion ? 1 : clamp(elapsed / 5600);
+        drawCenter(smooth(progress / 0.16));
+        drawCircle(smooth((progress - 0.13) / 0.18));
+        drawDivisions(smooth((progress - 0.28) / 0.18));
+        drawPointsAndNumbers(smooth((progress - 0.43) / 0.16));
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .88)', smooth((progress - 0.60) / 0.16), 1, true, 1.15);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .72)', 1, smooth((progress - 0.72) / 0.22), true, 1);
+        drawHeart(smooth((progress - 0.88) / 0.12));
+        drawZero(smooth((progress - 0.43) / 0.16));
+      } else if (sceneIndex === 1) {
+        drawComplete(0.88);
+        const breathLight = 0.45 + Math.sin(elapsed * 0.00135) * 0.18;
+        drawCircle(breathLight, 1.035);
+        drawCenter(1, 1.2 + Math.sin(elapsed * 0.00135) * 0.12);
+      } else if (sceneIndex === 2) {
+        const step = reducedMotion ? 0 : Math.floor(elapsed / 1350) % MOVEMENT.length;
+        const current = MOVEMENT[step];
+        const next = MOVEMENT[(step + 1) % MOVEMENT.length];
+        drawCircle(0.32);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .50)', 0.22);
+        drawPath([current, next], 'rgba(235, 204, 143, .98)', 1, 1, false, 1.4);
+        drawPointsAndNumbers(0.38, [current, next]);
+        drawCenter(0.75);
+        drawZero(0.7);
+      } else if (sceneIndex === 3) {
+        drawComplete(0.28);
+        const phase = reducedMotion ? 0.5 : (Math.sin(elapsed * 0.00115 - Math.PI / 2) + 1) / 2;
+        const edge = points.get(7)!;
+        const travelerX = edge.x + (cx - edge.x) * phase;
+        const travelerY = edge.y + (cy - edge.y) * phase;
+        context.beginPath();
+        context.moveTo(edge.x, edge.y);
+        context.lineTo(cx, cy);
+        stroke('rgba(231, 198, 132, .65)', 1, 0.9);
+        context.beginPath();
+        context.arc(travelerX, travelerY, 4, 0, Math.PI * 2);
+        context.fillStyle = 'rgba(244, 216, 157, .98)';
+        context.fill();
+        drawCenter(1);
+      } else if (sceneIndex === 4) {
+        drawDivisions(0.22);
+        drawCircle(0.48);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .48)', 0.34);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .44)', 0.28);
+        points.forEach((point, number) => {
+          const pulse = reducedMotion ? 2.5 : 2.5 + (Math.sin(elapsed * 0.0022 + number * 1.4) + 1) * 2.2;
+          context.beginPath();
+          context.arc(point.x, point.y, pulse, 0, Math.PI * 2);
+          context.fillStyle = number % 3 === 0 ? 'rgba(235, 204, 143, .78)' : 'rgba(205, 194, 171, .50)';
+          context.fill();
+        });
+        drawCenter(1);
+        drawHeart(0.65);
+      } else if (sceneIndex === 5) {
+        const progress = reducedMotion ? 1 : (elapsed % 5200) / 5200;
+        drawCircle(0.28);
+        drawDivisions(0.18);
+        drawPath(MOVEMENT, 'rgba(216, 199, 164, .30)', 0.34, 1, true, 1);
+        drawPath(MOVEMENT, 'rgba(236, 204, 143, .98)', 1, progress, true, 1.45);
+        drawPointsAndNumbers(0.52, [], false);
+        drawCenter(1, 1.12);
+      } else if (sceneIndex === 6) {
+        const cycle = reducedMotion ? 0.62 : (elapsed % 5000) / 5000;
+        const progress = cycle < 0.5 ? cycle * 2 : (1 - cycle) * 2;
+        drawCircle(0.24);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .48)', 0.25);
+        drawPath(MOVEMENT, 'rgba(235, 203, 142, .96)', 1, progress, true, 1.35);
+        drawPointsAndNumbers(0.46, [], false);
+        drawCenter(0.9);
+      } else if (sceneIndex === 7) {
+        drawComplete(steady ? 0.92 : 0.66);
+        if (steady) drawCircle(0.44, 1.025);
+      } else if (sceneIndex === 8) {
+        drawComplete(0.64, false);
+        context.beginPath();
+        context.moveTo(cx, cy - radius * 1.02);
+        context.lineTo(cx, cy + radius * 1.02);
+        stroke('rgba(236, 205, 145, .90)', 1.1, 1);
+        drawCenter(1);
+      } else if (sceneIndex === 9) {
+        drawComplete(0.68);
+        for (let ring = 1; ring <= 3; ring += 1) {
+          context.beginPath();
+          context.arc(cx, cy, radius * (0.38 + ring * 0.12), -Math.PI / 2, -Math.PI / 2 + Math.PI * (0.18 + ring * 0.1));
+          stroke('rgba(216, 187, 127, .30)', 0.8, 0.5);
         }
+      } else if (sceneIndex === 10) {
+        drawDivisions(1);
+        drawCircle(0.72);
+        drawPath(TRIANGLE, 'rgba(232, 199, 133, .98)', 1, 1, true, 1.35);
+        drawPath(MOVEMENT, 'rgba(216, 204, 179, .88)', 1, 1, true, 1.15);
+        drawPointsAndNumbers(1);
+        drawCenter(1);
+        drawZero(1);
+      } else if (sceneIndex === 11) {
+        const cycle = reducedMotion ? 0.82 : smooth(clamp((elapsed % 6500) / 5200));
+        const peripheral = 0.58 * (1 - cycle) + 0.08;
+        drawDivisions(peripheral * 0.65);
+        drawCircle(peripheral);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .70)', peripheral);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .60)', peripheral);
+        drawPointsAndNumbers(peripheral, [], false);
+        drawHeart(0.72 + cycle * 0.28, 1 + Math.sin(elapsed * 0.0012) * 0.025);
+        drawCenter(1, 1.18);
+        drawZero(0.95);
+      } else {
+        drawHeart(0.12, 0.94);
+        drawCenter(1, reducedMotion ? 1 : 1 + Math.sin(elapsed * 0.001) * 0.06);
       }
+
+      frame = requestAnimationFrame(draw);
     };
 
-    draw();
-    const observer = new ResizeObserver(draw);
+    resize();
+    const observer = new ResizeObserver(resize);
     observer.observe(canvas);
-    return () => observer.disconnect();
-  }, [layers]);
+    frame = requestAnimationFrame(draw);
 
-  const activeLayers = (Object.keys(layers) as LayerKey[]).filter((key) => layers[key]).map((key) => LAYER_LABELS[key]);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [paused, reducedMotion, sceneIndex, steady]);
+
+  const scene = SCENES[sceneIndex];
 
   return (
     <canvas
       ref={canvasRef}
       className="geometry-canvas"
       role="img"
-      aria-label={`Mathematically generated Sufi Enneagram geometry. Visible layers: ${activeLayers.join(', ')}.`}
+      aria-label={`${scene.transliteration}, ${scene.english}. A mathematically generated enneagram changes to express this scene’s interpretive behavior.`}
     />
   );
 }
 
-export default function Home() {
-  const [layers, setLayers] = useState(INITIAL_LAYERS);
+function Arrow({ direction }: { direction: 'left' | 'right' }) {
+  return <span aria-hidden="true">{direction === 'left' ? '←' : '→'}</span>;
+}
 
-  const toggle = (key: LayerKey) => {
-    setLayers((current) => ({ ...current, [key]: !current[key] }));
-  };
+export default function Home() {
+  const [sceneIndex, setSceneIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [steady, setSteady] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  const goTo = useCallback((index: number) => {
+    setSceneIndex((index + SCENES.length) % SCENES.length);
+    setPaused(false);
+    setSteady(false);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+        event.preventDefault();
+        goTo(sceneIndex + 1);
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        goTo(sceneIndex - 1);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [goTo, sceneIndex]);
+
+  useEffect(() => {
+    const activePoint = document.querySelector<HTMLElement>('.track-point.active');
+    activePoint?.scrollIntoView({
+      behavior: reducedMotion ? 'auto' : 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
+  }, [reducedMotion, sceneIndex]);
+
+  const scene = SCENES[sceneIndex];
 
   return (
-    <main className="prototype-shell">
+    <main className="experience-shell">
       <header className="masthead">
-        <div className="mark">MD</div>
-        <div>
-          <p className="overline">Masters of the Design · Geometry Study 01</p>
-          <p className="status">Research prototype · no scene animation</p>
+        <button className="mark" type="button" onClick={() => goTo(0)} aria-label="Return to the prologue">MD</button>
+        <div className="identity">
+          <p className="overline">Masters of the Design</p>
+          <p className="status">The Eleven Watches · an interpretive geometry</p>
         </div>
-        <p className="stage-tag">Gate 1 / Review</p>
+        <div className="header-progress" aria-label={`Scene ${sceneIndex + 1} of ${SCENES.length}`}>
+          <span>{String(sceneIndex + 1).padStart(2, '0')}</span>
+          <i aria-hidden="true" />
+          <span>{String(SCENES.length).padStart(2, '0')}</span>
+        </div>
       </header>
 
-      <section className="workbench">
-        <aside className="intro-panel">
-          <p className="eyebrow">The settled structure</p>
-          <h1>One center.<br />Nine positions.<br />Two number paths.</h1>
-          <p className="intro-copy">
-            This prototype verifies only the sign’s mathematical construction. It does not yet assign animation to any of the eleven principles.
-          </p>
-
-          <div className="formula-list" aria-label="Geometric formulas">
-            <p><span>ninefold</span><code>360° ÷ 9 = 40°</code></p>
-            <p><span>threefold</span><code>360° ÷ 3 = 120°</code></p>
-            <p><span>movement</span><code>1 → 4 → 2 → 8 → 5 → 7</code></p>
-            <p><span>recurrence</span><code>1 ÷ 7 = 0.142857…</code></p>
-          </div>
-
-          <div className="layer-controls" aria-label="Geometry layers">
-            <p className="eyebrow">Inspect layers</p>
-            {(Object.keys(LAYER_LABELS) as LayerKey[]).map((key) => (
-              <button
-                key={key}
-                type="button"
-                className={layers[key] ? 'layer-button active' : 'layer-button'}
-                aria-pressed={layers[key]}
-                onClick={() => toggle(key)}
-              >
-                <span className="indicator" aria-hidden="true" />
-                <span>{LAYER_LABELS[key]}</span>
-              </button>
-            ))}
-          </div>
-        </aside>
-
+      <section className="scene-grid" aria-labelledby={`scene-${scene.slug}`}>
         <div className="geometry-stage">
           <div className="axis axis-v" aria-hidden="true" />
           <div className="axis axis-h" aria-hidden="true" />
-          <p className="corner-label top">Generated from cx · cy · r · θ</p>
-          <GeometryCanvas layers={layers} />
-          <p className="corner-label bottom">No traced paths · responsive at every size</p>
+          <p className="geometry-caption top">Generated from cx · cy · r · θ</p>
+          <GeometryCanvas sceneIndex={sceneIndex} paused={paused} steady={steady} reducedMotion={reducedMotion} />
+          <p className="geometry-caption bottom">Nine positions · 40° each</p>
         </div>
+
+        <article className="scene-panel" key={scene.slug}>
+          <div className="scene-number" aria-hidden="true">{scene.number}</div>
+          <p className="scene-kicker">Watch {scene.number}</p>
+          <h1 id={`scene-${scene.slug}`}>{scene.transliteration}</h1>
+          <p className="english">{scene.english}</p>
+          <p className="scene-line">{scene.line}</p>
+
+          <p className="interaction-cue"><span aria-hidden="true">◇</span>{scene.cue}</p>
+
+          {sceneIndex === 7 && (
+            <button
+              type="button"
+              className={steady ? 'ritual-control active' : 'ritual-control'}
+              onPointerDown={() => setSteady(true)}
+              onPointerUp={() => setSteady(false)}
+              onPointerCancel={() => setSteady(false)}
+              onPointerLeave={() => setSteady(false)}
+              onKeyDown={(event) => {
+                if (event.key === ' ' || event.key === 'Enter') setSteady(true);
+              }}
+              onKeyUp={(event) => {
+                if (event.key === ' ' || event.key === 'Enter') setSteady(false);
+              }}
+            >
+              <span className="control-pulse" aria-hidden="true" />
+              {steady ? 'Alignment held' : 'Hold to steady'}
+            </button>
+          )}
+
+          {sceneIndex === 9 && (
+            <button type="button" className={paused ? 'ritual-control active' : 'ritual-control'} onClick={() => setPaused((current) => !current)} aria-pressed={paused}>
+              <span className="control-pulse" aria-hidden="true" />
+              {paused ? 'Release time' : 'Pause time'}
+            </button>
+          )}
+
+          {sceneIndex === 12 && (
+            <button type="button" className="ritual-control" onClick={() => goTo(0)}>
+              Begin again <Arrow direction="right" />
+            </button>
+          )}
+
+          <details className="research-note">
+            <summary>Source & interpretation</summary>
+            <div>
+              <p><span>Source relation</span>{scene.source}</p>
+              <p><span>Design reading</span>{scene.interpretation}</p>
+            </div>
+          </details>
+        </article>
       </section>
 
-      <section className="explanation" aria-labelledby="explanation-title">
-        <div>
-          <p className="eyebrow" id="explanation-title">What is generated</p>
-          <p>Every numbered position is calculated at an exact 40° interval around one center. The two graphs are drawn from number arrays, so resizing changes scale—not relationships.</p>
+      <nav className="sequence-nav" aria-label="Experience sequence">
+        <button type="button" className="nav-arrow" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous watch"><Arrow direction="left" /></button>
+        <div className="scene-track">
+          {SCENES.map((item, index) => (
+            <button
+              key={item.slug}
+              type="button"
+              className={index === sceneIndex ? 'track-point active' : 'track-point'}
+              aria-label={`Go to ${item.transliteration}: ${item.english}`}
+              aria-current={index === sceneIndex ? 'step' : undefined}
+              onClick={() => goTo(index)}
+            >
+              <span>{item.number}</span>
+            </button>
+          ))}
         </div>
-        <div>
-          <p className="eyebrow">What remains separate</p>
-          <p>The outer 9 / 3 / 6 numeric triangle and the smaller spiritual-heart triangle near zero are independent layers. The prototype does not pretend they are the same object.</p>
-        </div>
-        <div>
-          <p className="eyebrow">What remains interpretive</p>
-          <p>Making eleven Naqshbandi principles alter this sign is our proposed digital experiment. None of those scene behaviors has been built at this review gate.</p>
-        </div>
-      </section>
+        <button type="button" className="nav-arrow" onClick={() => goTo(sceneIndex + 1)} aria-label="Next watch"><Arrow direction="right" /></button>
+      </nav>
+
+      <p className="sr-only" aria-live="polite">Now showing {scene.transliteration}, {scene.english}.</p>
     </main>
   );
 }
