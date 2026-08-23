@@ -735,7 +735,7 @@ export default function Home() {
         <div className="geometry-stage" key={`geometry-${scene.slug}`}>
           <div className="axis axis-v" aria-hidden="true" />
           <div className="axis axis-h" aria-hidden="true" />
-          <p className="geometry-caption top">Generated from cx · cy · r · θ</p>
+          <p className="geometry-caption top">Calculated from a center, radius, and angle.</p>
           <GeometryCanvas sceneIndex={sceneIndex} paused={paused} steady={steady} reducedMotion={reducedMotion} />
           <p className="geometry-caption bottom">Nine positions · 40° each</p>
         </div>
