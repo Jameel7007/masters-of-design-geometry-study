@@ -631,7 +631,7 @@ export default function Home() {
             <p className="overline">Masters of the Design</p>
             <p className="status">An introduction to the Eleven Principles</p>
           </div>
-          <button type="button" className="intro-skip" onClick={() => enterAt(0)}>Enter experience <Arrow direction="right" /></button>
+          <button type="button" className="intro-skip" onClick={() => enterAt(0)} aria-label="Skip the introduction and begin with the Point">Begin with the Point <Arrow direction="right" /></button>
         </header>
 
         <section className="intro-stage" aria-live="polite">
@@ -701,7 +701,7 @@ export default function Home() {
         </section>
 
         <nav className="intro-nav" aria-label="Introduction sequence">
-          <button type="button" className="intro-arrow" onClick={() => setIntroStep((current) => Math.max(0, current - 1))} disabled={introStep === 0} aria-label="Previous introduction page"><Arrow direction="left" /></button>
+          <button type="button" className="intro-arrow intro-previous" onClick={() => setIntroStep((current) => Math.max(0, current - 1))} disabled={introStep === 0} aria-label="Previous introduction page"><Arrow direction="left" /><span>Back</span></button>
           <div>
             {['Dedication', 'Five stations', 'Eleven principles'].map((label, index) => (
               <button type="button" key={label} className={introStep === index ? 'active' : ''} onClick={() => setIntroStep(index)} aria-current={introStep === index ? 'step' : undefined}>
@@ -709,7 +709,13 @@ export default function Home() {
               </button>
             ))}
           </div>
-          <button type="button" className="intro-arrow" onClick={() => introStep === 2 ? enterAt(0) : setIntroStep((current) => current + 1)} aria-label={introStep === 2 ? 'Enter the experience' : 'Next introduction page'}><Arrow direction="right" /></button>
+          <button type="button" className="intro-next" onClick={() => introStep === 2 ? enterAt(0) : setIntroStep((current) => current + 1)} aria-label={introStep === 2 ? 'Begin with the Point' : `Continue to ${['Five stations', 'Eleven principles'][introStep]}`}>
+            <span className="intro-next-copy">
+              <small>{introStep === 2 ? 'Begin the study' : 'Continue to'}</small>
+              <strong>{['Five stations', 'Eleven principles', 'The Point'][introStep]}</strong>
+            </span>
+            <Arrow direction="right" />
+          </button>
         </nav>
       </main>
     );
