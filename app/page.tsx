@@ -11,7 +11,6 @@ type Scene = {
   transliteration: string;
   english: string;
   overview?: string;
-  overviewSource?: string;
   line: string;
   source: string;
   interpretation: string;
@@ -34,8 +33,7 @@ const SCENES: Scene[] = [
     slug: 'hosh-dar-dam',
     transliteration: 'Hosh dar dam',
     english: 'Conscious breathing',
-    overview: 'Awareness of breathing is linked with remembering and reaching toward subtle perception. The expanded source emphasizes safeguarding inhalation, exhalation, and the interval between them from heedlessness.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah links awareness of breathing with remembering and subtle perception. The Naqshbandi source emphasizes safeguarding inhalation, exhalation, and the interval between them from heedlessness.',
     line: 'The whole sign visibly expands, rests, and gathers without losing its center.',
     source: 'Bakhtiar describes breath as rhythm in time and breath-spirit as movement. The pairing with this principle is conceptually adjacent.',
     interpretation: 'Layered waves of scale, luminosity, and circulation translate attention to breath without prescribing a breathing practice.',
@@ -46,8 +44,7 @@ const SCENES: Scene[] = [
     slug: 'nazar-bar-qadam',
     transliteration: 'Nazar bar qadam',
     english: 'Watch your step',
-    overview: 'Awareness of actions, watchfulness, and concentration. The expanded source says the gaze precedes the step and warns that unnecessary sights may disturb or veil the heart.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah emphasizes awareness of actions, watchfulness, and concentration. The Naqshbandi source says the gaze precedes the step and warns that unnecessary sights may disturb or veil the heart.',
     line: 'Only the present position and its next relation come fully into view.',
     source: 'The principle concerns watchfulness and the step. No reviewed source assigns it to an enneagram path.',
     interpretation: 'The moving emphasis along the recurring number path is our visual proposal.',
@@ -58,8 +55,7 @@ const SCENES: Scene[] = [
     slug: 'safar-dar-watan',
     transliteration: 'Safar dar watan',
     english: 'Journey homeward',
-    overview: 'An exploration of one’s own mind connected with transformation of the self. The expanded source describes an inward journey from lower manners toward higher manners, and from creation toward the Creator.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah connects the journey with exploring one’s own mind and transforming the self. The Naqshbandi source describes an inward passage from lower manners toward higher manners, and from creation toward the Creator.',
     line: 'Movement crosses the rim, enters the sign, and approaches zero.',
     source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
     interpretation: 'The traveling point makes that inward relation spatial and visible.',
@@ -70,8 +66,7 @@ const SCENES: Scene[] = [
     slug: 'khalwat-dar-anjuman',
     transliteration: 'Khalwat dar anjuman',
     english: 'Solitude in the crowd',
-    overview: 'The capacity to remove and reattach consciousness while in company: outwardly among people, while inwardly remaining present with God.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah describes the capacity to remove and reattach consciousness while in company. The Naqshbandi source describes being outwardly with people while inwardly remaining present with God.',
     line: 'The circumference remains active while the center stays undisturbed.',
     source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
     interpretation: 'Independent peripheral rhythms surround a constant center.',
@@ -82,8 +77,7 @@ const SCENES: Scene[] = [
     slug: 'yad-kard',
     transliteration: 'Yad kard',
     english: 'Essential remembrance',
-    overview: 'Remembering conceives a contact as interrupted and reaches to restore it through dedication. The expanded source describes remembrance as polishing the heart.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah describes contact as interrupted and remembrance as reaching to restore it through dedication. The Naqshbandi source calls yad kard the essence of dhikr and describes remembrance as polishing the heart.',
     line: 'The same path returns, each recurrence leaving a little more clarity.',
     source: 'No reviewed source establishes a one-to-one geometric correspondence for this principle.',
     interpretation: 'Repeated passage through the generated path is our metaphor for remembrance, not a devotional instruction.',
@@ -94,8 +88,7 @@ const SCENES: Scene[] = [
     slug: 'baz-gasht',
     transliteration: 'Baz gasht',
     english: 'Restraint · returning',
-    overview: 'One supplied source names this Restraint, literally “pulling back.” The expanded source names it Returning and emphasizes surrender, submission, and return to God.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah names this Restraint, literally “pulling back.” The Naqshbandi source names it Returning and emphasizes surrender, submission, and return to God.',
     line: 'The extended line pulls back through the order from which it came.',
     source: 'Shah renders the term as restraint or pulling back; the expanded Naqshbandi source emphasizes returning. No geometric assignment is established.',
     interpretation: 'A reversible drawing motion preserves both renderings without claiming to resolve them.',
@@ -106,8 +99,7 @@ const SCENES: Scene[] = [
     slug: 'nigah-dasht',
     transliteration: 'Nigah dasht',
     english: 'Attentiveness',
-    overview: 'Watchfulness excludes distractions and remains alert to subtle perception. The expanded source describes guarding the heart against disruptive thoughts and low inclinations.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah describes watchfulness that excludes distractions and remains alert to subtle perception. The Naqshbandi source describes guarding the heart against disruptive thoughts and low inclinations.',
     line: 'Restlessness disperses the figure; sustained attention lets it align.',
     source: 'The sources describe watchfulness or attentiveness, but give no specific enneagram correspondence.',
     interpretation: 'Press-and-hold steadiness is our accessible interaction metaphor.',
@@ -118,8 +110,7 @@ const SCENES: Scene[] = [
     slug: 'yad-dasht',
     transliteration: 'Yad dasht',
     english: 'Recollection',
-    overview: 'Recollection, also called noting, is awareness of Absolute Truth as present. The expanded source emphasizes keeping the heart continuously in the Divine Presence.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion · The Principles of the Naqshbandi Way',
+    overview: 'Idries Shah describes recollection, or noting, as awareness of Absolute Truth as present. The Naqshbandi source emphasizes keeping the heart continuously in the Divine Presence.',
     line: 'Relationships orbit, reverse, and reconfigure around an unbroken thread through the center.',
     source: 'Bakhtiar’s center as unitary focus is directly supported; using it for this principle is conceptually adjacent.',
     interpretation: 'The persistent center-thread anchors a continuously moving field of arcs, points, and rotating relations.',
@@ -130,8 +121,7 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-zamani',
     transliteration: 'Wuquf-i zamani',
     english: 'Pause of time',
-    overview: 'A reprise or review of thought and action, together with other pauses in time.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion',
+    overview: 'Idries Shah describes a reprise or review of thought and action. The Naqshbandi source adds watchfulness over one’s composure and an accounting of each moment as presence or heedlessness.',
     line: 'Motion can stop while the evidence of duration remains.',
     source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
     interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
@@ -142,8 +132,7 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-adadi',
     transliteration: 'Wuquf-i adadi',
     english: 'Pause of numbers',
-    overview: 'Awareness of the number of repetitions of a formula and of particular forms of counting.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion',
+    overview: 'Idries Shah emphasizes awareness of repetition and forms of counting. The Naqshbandi source says number is not an end in itself: counting gathers attention, guards the heart from distraction, and returns number toward the One.',
     line: 'Ornament recedes. The exact numerical skeleton remains.',
     source: 'The nine divisions, 3 / 6 / 9 triangle, zero, and 1 / 4 / 2 / 8 / 5 / 7 line are directly supported by Bakhtiar.',
     interpretation: 'Pairing this mathematical disclosure with the principle is our interpretation.',
@@ -154,8 +143,7 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-qalbi',
     transliteration: 'Wuquf-i qalbi',
     english: 'Pause of the heart',
-    overview: 'Visualization or awareness of the heart, with an exercise concerning the identification of the individual with the ultimate.',
-    overviewSource: 'Idries Shah, A Perfumed Scorpion',
+    overview: 'Idries Shah emphasizes visualization or awareness of the heart. The Naqshbandi source describes directing the heart toward Divine Presence and quieting the turbulence of thoughts moving between light and dark.',
     line: 'The periphery yields to the smaller heart-triangle gathered around zero.',
     source: 'Bakhtiar directly supports the spiritual-heart triangle near the center. Its use as this culmination is conceptually adjacent.',
     interpretation: 'The staged recession from periphery to heart to point is our narrative composition.',
@@ -674,7 +662,6 @@ export default function Home() {
                     </div>
                   </article>
                 ))}
-                <p className="station-boundary">The five stations and their colors are presented as a distinct teaching. This experience does not assign them one-to-one to Bakhtiar’s nine numeric positions, and it does not reproduce restricted practice instructions.</p>
               </div>
             </div>
           )}
@@ -689,7 +676,7 @@ export default function Home() {
               </div>
               <div className="principle-overview" aria-label="The eleven Naqshbandi principles">
                 {SCENES.slice(1, 12).map((item, index) => (
-                  <button type="button" key={item.slug} onClick={() => enterAt(index + 1)}>
+                  <button type="button" className={index === 10 ? 'principle-eleven' : ''} key={item.slug} onClick={() => enterAt(index + 1)}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <strong>{item.transliteration}</strong>
                     <small>{item.english}</small>
@@ -756,7 +743,7 @@ export default function Home() {
             <aside className="source-overview" aria-label={`Source overview for ${scene.transliteration}`}>
               <span>From the source texts</span>
               <p>{scene.overview}</p>
-              <small>{scene.overviewSource}</small>
+              <small>Idries Shah, <cite>A Perfumed Scorpion</cite> · <a href="https://legacy.nurmuhammad.com/NaqshbandiSecrets/11principlesofthenaqshbandisufiway.htm" target="_blank" rel="noreferrer">Naqshbandi Sufi Way, “The Principles of the Naqshbandi Way”</a></small>
             </aside>
           )}
 
