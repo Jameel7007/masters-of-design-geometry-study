@@ -560,6 +560,7 @@ export default function Home() {
   }, [reducedMotion, sceneIndex]);
 
   const scene = SCENES[sceneIndex];
+  const nextScene = SCENES[(sceneIndex + 1) % SCENES.length];
 
   if (!entered) {
     return (
@@ -715,6 +716,14 @@ export default function Home() {
             </button>
           )}
 
+          {sceneIndex < SCENES.length - 1 && (
+            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)}>
+              <span>{sceneIndex === 0 ? 'Begin the first Watch' : `Continue to Watch ${nextScene.number}`}</span>
+              <strong>{nextScene.transliteration}</strong>
+              <Arrow direction="right" />
+            </button>
+          )}
+
           {sceneIndex === 12 && (
             <button type="button" className="ritual-control" onClick={() => goTo(0)}>
               Begin again <Arrow direction="right" />
@@ -732,7 +741,7 @@ export default function Home() {
       </section>
 
       <nav className="sequence-nav" aria-label="Experience sequence">
-        <button type="button" className="nav-arrow" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous watch"><Arrow direction="left" /></button>
+        <button type="button" className="nav-arrow previous" onClick={() => goTo(sceneIndex - 1)} aria-label="Previous watch"><Arrow direction="left" /><span>Previous</span></button>
         <div className="scene-track">
           {SCENES.map((item, index) => (
             <button
@@ -747,7 +756,7 @@ export default function Home() {
             </button>
           ))}
         </div>
-        <button type="button" className="nav-arrow" onClick={() => goTo(sceneIndex + 1)} aria-label="Next watch"><Arrow direction="right" /></button>
+        <button type="button" className="nav-arrow next" onClick={() => goTo(sceneIndex + 1)} aria-label="Next watch"><span>{sceneIndex === SCENES.length - 1 ? 'Restart' : 'Next'}</span><Arrow direction="right" /></button>
       </nav>
 
       <p className="sr-only" aria-live="polite">Now showing {scene.transliteration}, {scene.english}.</p>
