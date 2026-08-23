@@ -979,7 +979,6 @@ export default function Home() {
         <div className={sceneIndex === 7 || sceneIndex === 9 ? 'geometry-stage has-control' : 'geometry-stage'} key={`geometry-${scene.slug}`}>
           <div className="axis axis-v" aria-hidden="true" />
           <div className="axis axis-h" aria-hidden="true" />
-          <p className="geometry-caption top">Calculated from a center, radius, and angle.</p>
           <GeometryCanvas sceneIndex={sceneIndex} paused={paused} steady={steady} reducedMotion={reducedMotion} />
           <p className="geometry-caption bottom">Nine positions · 40° each</p>
           {sceneIndex === 7 && (
@@ -1069,6 +1068,7 @@ export default function Home() {
               {sceneIndex === SCENES.length - 1 && (
                 <>
                   <p><span>Naqshbandi references</span><a href="https://naqshbandi.org/teachings/topics/the-principles-of-the-naqshbandi-way/" target="_blank" rel="noreferrer">The Principles of the Naqshbandi Way</a> · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/muhammad-bahauddin-shah-naqshband/" target="_blank" rel="noreferrer">Muhammad Baha’uddin Shah Naqshband</a> · <a href="https://naqshbandi.org/the-naqshbandi-golden-chain/the-chain/shaykh-abdullah-al-faiz-ad-daghestani-3/" target="_blank" rel="noreferrer">Shaykh Abdullah al-Fa’iz ad-Daghestani</a></p>
+                  <p><span>Construction note</span>The diagram is calculated from a center, radius, and angle.</p>
                   <p><span>Secondary note</span>Idries Shah, <cite>A Perfumed Scorpion</cite>.</p>
                 </>
               )}

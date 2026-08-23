@@ -147,7 +147,6 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 .geometry-stage.has-control .axis-v { bottom: calc(4% + 58px); }
 .geometry-stage.has-control .axis-h { top: calc((100% - 58px) / 2); }
 .geometry-caption { position: absolute; z-index: 3; margin: 0; color: #91897e; font-size: 8px; letter-spacing: .17em; text-transform: uppercase; pointer-events: none; }
-.geometry-caption.top { top: 24px; right: 28px; }
 .geometry-caption.bottom { bottom: 26px; left: 28px; }
 .geometry-stage.has-control .geometry-caption.bottom { bottom: 75px; }
 .geometry-interaction { position: absolute; z-index: 5; right: 0; bottom: 0; left: 0; min-height: 58px; display: flex; align-items: center; justify-content: center; padding: 7px 16px; border-top: 1px solid var(--line); background: rgba(12,12,11,.94); }
@@ -318,7 +317,6 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .header-progress i { width: 20px; }
   .intro-return { display: none; }
   .scene-grid { grid-template-rows: minmax(320px, 46svh) auto; }
-  .geometry-caption.top { top: 16px; right: 16px; }
   .geometry-caption.bottom { bottom: 17px; left: 16px; }
   .geometry-stage.has-control .geometry-caption.bottom { bottom: 75px; }
   .geometry-interaction { padding-inline: 10px; }
