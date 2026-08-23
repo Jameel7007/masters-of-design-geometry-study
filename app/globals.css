@@ -238,6 +238,17 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   82% { transform: translateX(4px); }
 }
 
+@media (min-width: 941px) and (max-width: 1220px) {
+  .principles-page {
+    grid-template-columns: minmax(270px, .68fr) minmax(0, 1.32fr);
+    gap: 34px;
+    padding: 32px;
+  }
+  .principles-heading, .principle-overview { min-width: 0; }
+  .principle-overview button { min-width: 0; padding-inline: 12px; }
+  .principle-overview strong { min-width: 0; overflow-wrap: anywhere; }
+}
+
 @media (max-width: 940px) {
   .introduction-shell { height: auto; min-height: 100svh; overflow: visible; grid-template-rows: 68px auto auto; }
   .intro-stage { overflow: visible; }
