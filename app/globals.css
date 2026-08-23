@@ -287,15 +287,15 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .principle-overview .principle-eleven { grid-column: auto; width: auto; grid-template-columns: 30px 1fr; justify-content: initial; justify-self: stretch; border-left: 0; }
   .station-card { min-height: 100px; }
   .principle-overview button { min-height: 68px; }
-  .intro-nav { grid-template-columns: 52px minmax(0, 1fr) 112px; min-height: 64px; padding-inline: 2px; }
+  .intro-nav { grid-template-columns: 48px minmax(0, 1fr) clamp(140px, 36vw, 170px); min-height: 74px; padding-inline: 2px; }
   .intro-nav > div button { min-width: 0; flex: 1; padding: 0 4px; font-size: 8px; letter-spacing: .05em; }
   .intro-arrow { gap: 5px; padding: 0 6px; font-size: 7px; letter-spacing: .06em; }
   .intro-arrow > span:first-child { font-size: 15px; }
-  .intro-next { gap: 7px; padding: 0 7px 0 9px; }
-  .intro-next-copy { gap: 3px; }
-  .intro-next-copy small { font-size: 6px; letter-spacing: .09em; }
-  .intro-next-copy strong { font-size: 11px; }
-  .intro-next > span:last-child { width: 25px; height: 25px; flex-basis: 25px; font-size: 14px; }
+  .intro-next { gap: 10px; padding: 0 10px 0 13px; }
+  .intro-next-copy { gap: 4px; }
+  .intro-next-copy small { font-size: 7px; line-height: 1.25; letter-spacing: .1em; }
+  .intro-next-copy strong { font-size: 14px; line-height: 1.05; text-wrap: balance; }
+  .intro-next > span:last-child { width: 31px; height: 31px; flex-basis: 31px; font-size: 17px; }
   .experience-shell { grid-template-rows: 64px 62px auto; }
   .masthead { padding: 0 17px; gap: 11px; }
   .mark { width: 31px; height: 31px; }
