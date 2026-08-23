@@ -56,10 +56,10 @@ const SCENES: Scene[] = [
     transliteration: 'Safar dar watan',
     english: 'Journey homeward',
     overview: 'Distinguish outward travel from the inward journey: leave lower manners and worldly desire for higher manners, purity, and movement from creation toward the Creator.',
-    line: 'Movement crosses the rim, enters the sign, and approaches zero.',
+    line: 'Journeys begin at different points around the circumference and return together to zero.',
     source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
     interpretation: 'The traveling point makes that inward relation spatial and visible.',
-    cue: 'Trace the passage from circumference to center.',
+    cue: 'Watch the different paths gather into the center.',
   },
   {
     number: '04',
@@ -420,20 +420,37 @@ function GeometryCanvas({
         drawCenter(0.75);
         drawZero(0.7);
       } else if (sceneIndex === 3) {
-        drawComplete(0.28);
-        const phase = reducedMotion ? 0.5 : (Math.sin(elapsed * 0.00115 - Math.PI / 2) + 1) / 2;
-        const edge = points.get(7)!;
-        const travelerX = edge.x + (cx - edge.x) * phase;
-        const travelerY = edge.y + (cy - edge.y) * phase;
-        context.beginPath();
-        context.moveTo(edge.x, edge.y);
-        context.lineTo(cx, cy);
-        stroke('rgba(231, 198, 132, .65)', 1, 0.9);
-        context.beginPath();
-        context.arc(travelerX, travelerY, 4, 0, Math.PI * 2);
-        context.fillStyle = 'rgba(244, 216, 157, .98)';
-        context.fill();
-        drawCenter(1);
+        drawComplete(0.24);
+        const cycle = reducedMotion ? 0.84 : (elapsed % 7600) / 7600;
+        const inwardOrder = [1, 6, 2, 7, 3, 8, 4, 9, 5];
+        let gathered = 0;
+
+        inwardOrder.forEach((number, index) => {
+          const origin = points.get(number)!;
+          const start = 0.07 + index * 0.06;
+          const progress = smooth((cycle - start) / 0.29);
+          const arrivalFade = 1 - smooth((cycle - 0.87) / 0.08);
+          const active = smooth((cycle - start) / 0.035) * arrivalFade;
+          const travelerX = origin.x + (cx - origin.x) * progress;
+          const travelerY = origin.y + (cy - origin.y) * progress;
+          gathered += progress;
+
+          context.beginPath();
+          context.moveTo(origin.x, origin.y);
+          context.lineTo(cx, cy);
+          stroke(number % 3 === 0 ? 'rgba(235, 202, 138, .62)' : 'rgba(209, 197, 173, .34)', 0.85, active * (0.22 + progress * 0.48));
+
+          context.beginPath();
+          context.arc(travelerX, travelerY, 3.2 + (1 - progress) * 0.8, 0, Math.PI * 2);
+          context.fillStyle = number % 3 === 0
+            ? `rgba(244, 213, 151, ${active})`
+            : `rgba(226, 210, 178, ${active * 0.9})`;
+          context.fill();
+        });
+
+        const convergence = gathered / inwardOrder.length;
+        drawHeart(0.38 + convergence * 0.34);
+        drawCenter(0.82 + convergence * 0.18, 1.08 + convergence * 0.92);
       } else if (sceneIndex === 4) {
         drawDivisions(0.22);
         drawCircle(0.48);
