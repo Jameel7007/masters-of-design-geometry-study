@@ -67,10 +67,10 @@ const SCENES: Scene[] = [
     transliteration: 'Khalwat dar anjuman',
     english: 'Solitude in the crowd',
     overview: 'Remain outwardly in companionship with people while the heart is inwardly present with God: true seclusion within the gathering.',
-    line: 'The circumference remains active while the center stays undisturbed.',
+    line: 'The circumference circulates in many rhythms while the center stays undisturbed.',
     source: 'Center and circumference are directly supported geometry; their use as inner stillness and outer activity is conceptually adjacent.',
     interpretation: 'Independent peripheral rhythms surround a constant center.',
-    cue: 'Let the moving edge and still center coexist.',
+    cue: 'Watch the gathering move around the stillness at its heart.',
   },
   {
     number: '05',
@@ -480,19 +480,69 @@ function GeometryCanvas({
         drawHeart(0.38 + convergence * 0.34);
         drawCenter(0.82 + convergence * 0.18, 1.08 + convergence * 0.92);
       } else if (sceneIndex === 4) {
-        drawDivisions(0.22);
-        drawCircle(0.48);
-        drawPath(TRIANGLE, 'rgba(224, 191, 123, .48)', 0.34);
-        drawPath(MOVEMENT, 'rgba(202, 190, 163, .44)', 0.28);
+        drawDivisions(0.18);
+        drawCircle(0.62);
+        drawCircle(0.18, 1.025);
+        drawPath(TRIANGLE, 'rgba(224, 191, 123, .48)', 0.30);
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .44)', 0.24);
+
+        const orbitTime = reducedMotion ? 0.4 : elapsed * 0.00042;
+        const arcLayers = [
+          { scale: 0.965, speed: 1, offset: 0.1, length: 0.34 },
+          { scale: 1, speed: -0.72, offset: 2.15, length: 0.24 },
+          { scale: 1.035, speed: 0.48, offset: 4.1, length: 0.18 },
+        ];
+
+        arcLayers.forEach((arc, index) => {
+          const start = arc.offset + orbitTime * arc.speed;
+          const end = start + Math.PI * arc.length * Math.sign(arc.speed);
+          context.beginPath();
+          context.arc(cx, cy, radius * arc.scale, start, end, arc.speed < 0);
+          stroke(
+            index === 0 ? 'rgba(239, 208, 148, .82)' : 'rgba(210, 197, 171, .54)',
+            index === 0 ? 1.35 : 0.9,
+            reducedMotion ? 0.58 : 0.72,
+          );
+        });
+
+        for (let index = 0; index < 5; index += 1) {
+          const direction = index % 2 === 0 ? 1 : -1;
+          const speed = 0.72 + index * 0.13;
+          const angle = index * (Math.PI * 2 / 5) + orbitTime * direction * speed;
+          const orbitRadius = radius * (0.985 + ((index % 3) - 1) * 0.018);
+          const tailAngle = angle - direction * 0.11;
+          const x = cx + Math.cos(angle) * orbitRadius;
+          const y = cy + Math.sin(angle) * orbitRadius;
+
+          context.beginPath();
+          context.moveTo(
+            cx + Math.cos(tailAngle) * orbitRadius,
+            cy + Math.sin(tailAngle) * orbitRadius,
+          );
+          context.lineTo(x, y);
+          stroke(
+            index % 2 === 0 ? 'rgba(241, 210, 151, .78)' : 'rgba(213, 199, 172, .50)',
+            1,
+            0.78,
+          );
+
+          context.beginPath();
+          context.arc(x, y, index === 0 ? 3.8 : 2.8, 0, Math.PI * 2);
+          context.fillStyle = index === 0 ? 'rgba(247, 217, 158, .98)' : 'rgba(225, 208, 177, .82)';
+          context.fill();
+        }
+
         points.forEach((point, number) => {
-          const pulse = reducedMotion ? 2.5 : 2.5 + (Math.sin(elapsed * 0.0022 + number * 1.4) + 1) * 2.2;
+          const pulse = reducedMotion
+            ? 2.8
+            : 2.6 + (Math.sin(elapsed * (0.0018 + number * 0.00003) + number * 1.4) + 1) * 2.5;
           context.beginPath();
           context.arc(point.x, point.y, pulse, 0, Math.PI * 2);
           context.fillStyle = number % 3 === 0 ? 'rgba(235, 204, 143, .78)' : 'rgba(205, 194, 171, .50)';
           context.fill();
         });
-        drawCenter(1);
-        drawHeart(0.65);
+        drawHeart(0.62);
+        drawCenter(1, 1.22);
       } else if (sceneIndex === 5) {
         const progress = reducedMotion ? 1 : (elapsed % 5200) / 5200;
         drawCircle(0.28);
