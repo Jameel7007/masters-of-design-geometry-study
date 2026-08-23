@@ -23,10 +23,10 @@ const SCENES: Scene[] = [
     slug: 'the-point',
     transliteration: 'The Point',
     english: 'Prologue',
-    line: 'A center becomes a circumference, nine positions, and two number paths.',
+    line: 'Nine positions and two number paths gather back toward the center from which the sign unfolds.',
     source: 'Bakhtiar directly supports zero, center and circumference, nine 40° divisions, three 120° regions, and the two number sequences.',
     interpretation: 'Revealing those dependencies as a timed construction is the experience’s narrative device.',
-    cue: 'Watch the sign assemble, then move forward.',
+    cue: 'Watch every position return to the Point.',
   },
   {
     number: '01',
@@ -371,15 +371,33 @@ function GeometryCanvas({
       };
 
       if (sceneIndex === 0) {
-        const progress = reducedMotion ? 1 : clamp(elapsed / 5600);
+        const progress = reducedMotion ? 1 : clamp(elapsed / 6500);
         drawCenter(smooth(progress / 0.16));
         drawCircle(smooth((progress - 0.13) / 0.18));
         drawDivisions(smooth((progress - 0.28) / 0.18));
         drawPointsAndNumbers(smooth((progress - 0.43) / 0.16));
         drawPath(TRIANGLE, 'rgba(224, 191, 123, .88)', smooth((progress - 0.60) / 0.16), 1, true, 1.15);
-        drawPath(MOVEMENT, 'rgba(202, 190, 163, .72)', 1, smooth((progress - 0.72) / 0.22), true, 1);
-        drawHeart(smooth((progress - 0.88) / 0.12));
+        drawPath(MOVEMENT, 'rgba(202, 190, 163, .72)', 1, smooth((progress - 0.70) / 0.18), true, 1);
+        drawHeart(smooth((progress - 0.84) / 0.10));
         drawZero(smooth((progress - 0.43) / 0.16));
+
+        const convergence = smooth((progress - 0.86) / 0.14);
+        const inwardAlpha = Math.sin(convergence * Math.PI);
+        if (inwardAlpha > 0) {
+          points.forEach((point, number) => {
+            const travelerX = point.x + (cx - point.x) * convergence;
+            const travelerY = point.y + (cy - point.y) * convergence;
+            context.beginPath();
+            context.moveTo(point.x, point.y);
+            context.lineTo(travelerX, travelerY);
+            stroke(number % 3 === 0 ? 'rgba(239, 207, 145, .78)' : 'rgba(214, 198, 166, .54)', 0.9, inwardAlpha * 0.84);
+            context.beginPath();
+            context.arc(travelerX, travelerY, 2.8 - convergence * 0.8, 0, Math.PI * 2);
+            context.fillStyle = `rgba(242, 214, 157, ${inwardAlpha * 0.96})`;
+            context.fill();
+          });
+        }
+        drawCenter(0.78 + convergence * 0.22, 1 + convergence * 0.9);
       } else if (sceneIndex === 1) {
         const cycle = reducedMotion ? 0.62 : (elapsed % 6600) / 6600;
         drawComplete(0.58 + breathWave * 0.30);
@@ -800,19 +818,28 @@ export default function Home() {
             </button>
           )}
 
-          {sceneIndex < SCENES.length - 1 && (
-            <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === 0 ? 'Continue to the first principle' : sceneIndex === SCENES.length - 2 ? 'Continue to the epilogue' : 'Continue to the next principle'}>
-              <span>{sceneIndex === 0 ? 'Begin the study' : sceneIndex === SCENES.length - 2 ? 'Complete the study' : 'Continue'}</span>
-              <strong>{sceneIndex === 0 ? 'First principle' : sceneIndex === SCENES.length - 2 ? 'Epilogue' : 'Next principle'}</strong>
-              <Arrow direction="right" />
-            </button>
-          )}
+          <div className={sceneIndex === 0 ? 'sequence-actions single' : 'sequence-actions'} aria-label="Page navigation">
+            {sceneIndex > 0 && (
+              <button type="button" className="sequence-back" onClick={() => goTo(sceneIndex - 1)} aria-label={sceneIndex === 1 ? 'Return to The Point' : 'Go to the previous principle'}>
+                <Arrow direction="left" />
+                <span>{sceneIndex === 1 ? 'Back to the Point' : 'Previous principle'}</span>
+              </button>
+            )}
 
-          {sceneIndex === 12 && (
-            <button type="button" className="ritual-control" onClick={() => goTo(0)}>
-              Begin again <Arrow direction="right" />
-            </button>
-          )}
+            {sceneIndex < SCENES.length - 1 ? (
+              <button type="button" className="sequence-continue" onClick={() => goTo(sceneIndex + 1)} aria-label={sceneIndex === 0 ? 'Continue to the first principle' : sceneIndex === SCENES.length - 2 ? 'Continue to the epilogue' : 'Continue to the next principle'}>
+                <span>{sceneIndex === 0 ? 'Begin the study' : sceneIndex === SCENES.length - 2 ? 'Complete the study' : 'Continue'}</span>
+                <strong>{sceneIndex === 0 ? 'First principle' : sceneIndex === SCENES.length - 2 ? 'Epilogue' : 'Next principle'}</strong>
+                <Arrow direction="right" />
+              </button>
+            ) : (
+              <button type="button" className="sequence-continue" onClick={() => goTo(0)} aria-label="Begin again at The Point">
+                <span>Return to center</span>
+                <strong>Begin again at The Point</strong>
+                <Arrow direction="right" />
+              </button>
+            )}
+          </div>
 
           <details className="research-note">
             <summary>{sceneIndex === SCENES.length - 1 ? 'References & interpretation' : 'Source & interpretation'}</summary>
