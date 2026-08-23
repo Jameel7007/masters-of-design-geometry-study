@@ -69,7 +69,7 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 .intro-source-line a:hover { color: var(--gold); }
 .station-field { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .station-card { min-height: 112px; display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 15px; padding: 18px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.station-card:nth-child(5) { grid-column: 1 / -1; }
+.station-card:nth-child(5) { grid-column: 1 / -1; width: 50%; justify-self: center; border-left: 1px solid var(--line); }
 .station-index { color: #91897e; font: 9px ui-monospace, SFMono-Regular, Menlo, monospace; }
 .station-light { --station-color: var(--gold); display: block; width: 32px; height: 32px; border: 1px solid rgba(238,226,202,.36); border-radius: 50%; background: var(--station-color); box-shadow: 0 0 26px color-mix(in srgb, var(--station-color) 32%, transparent); }
 .station-card h2 { margin: 0; color: #d2c7b4; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 22px; font-weight: 400; }
@@ -275,7 +275,7 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .dedication-card strong { font-size: 22px; line-height: 1.15; }
   .stations-page, .principles-page { padding: 38px 20px 48px; }
   .station-field, .principle-overview { grid-template-columns: 1fr; }
-  .station-card:nth-child(5) { grid-column: auto; }
+  .station-card:nth-child(5) { grid-column: auto; width: auto; justify-self: stretch; border-left: 0; }
   .principle-overview .principle-eleven { grid-column: auto; width: auto; justify-self: stretch; border-left: 0; }
   .station-card { min-height: 100px; }
   .principle-overview button { min-height: 68px; }
