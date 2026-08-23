@@ -59,7 +59,8 @@ button:focus-visible, summary:focus-visible { outline: 1px solid var(--gold); ou
 .dedication-card strong { display: block; margin-top: 6px; color: #d8ccb7; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: clamp(19px, 1.7vw, 26px); font-weight: 400; }
 .dedication-card strong b { color: var(--gold); font-family: Georgia, serif; font-size: .72em; font-weight: 400; }
 .dedication-card p { max-width: 570px; margin: 7px 0 0; color: #9a9286; font-size: 10px; line-height: 1.45; }
-.intro-primary { min-height: 44px; display: inline-flex; align-items: center; gap: 13px; margin-top: 18px; padding: 0 18px; border: 1px solid rgba(215,185,121,.34); background: rgba(215,185,121,.035); color: #c4b595; font-size: 8px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.intro-primary { width: min(100%, 520px); min-height: 56px; display: inline-flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 20px; padding: 0 23px; border: 1px solid rgba(215,185,121,.46); background: rgba(215,185,121,.052); color: #d2c09a; font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; }
+.intro-primary > span { font-size: 16px; }
 .intro-primary:hover { border-color: var(--gold); color: #ead5a7; }
 
 .stations-page { grid-template-columns: minmax(360px, .75fr) minmax(540px, 1.25fr); align-items: center; gap: clamp(28px, 5vw, 90px); padding: clamp(38px, 5vw, 84px); }
@@ -268,6 +269,7 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .intro-dek { margin-top: 22px; font-size: 17px; }
   .dedication-card { margin-top: 27px; padding-left: 16px; }
   .dedication-card strong { font-size: 22px; line-height: 1.15; }
+  .intro-primary { min-height: 54px; margin-top: 22px; padding-inline: 18px; }
   .stations-page, .principles-page { padding: 38px 20px 48px; }
   .station-field, .principle-overview { grid-template-columns: 1fr; }
   .station-card:nth-child(5) { grid-column: auto; width: auto; grid-template-columns: auto auto 1fr; justify-content: initial; justify-self: stretch; }
