@@ -133,10 +133,10 @@ const SCENES: Scene[] = [
     transliteration: 'Wuquf-i adadi',
     english: 'Pause of numbers',
     overview: 'Counting in silent dhikr is not for the account itself: it gathers attention, guards the heart from intrusive thoughts, and turns number toward the One.',
-    line: 'Ornament recedes. The exact numerical skeleton remains.',
+    line: 'The nine positions are counted one by one; each number is held in relation to the single center.',
     source: 'The nine divisions, 3 / 6 / 9 triangle, zero, and 1 / 4 / 2 / 8 / 5 / 7 line are directly supported by Bakhtiar.',
-    interpretation: 'Pairing this mathematical disclosure with the principle is our interpretation.',
-    cue: 'Read the sign as number and relation.',
+    interpretation: 'A recurring count highlights one position at a time and gathers the completed cycle into the center; it is a visual metaphor, not a dhikr instruction.',
+    cue: 'Follow the count around the sign, then watch the nine gather into One.',
   },
   {
     number: '11',
@@ -545,12 +545,69 @@ function GeometryCanvas({
         stroke('rgba(237, 205, 144, .70)', 1, 0.82);
         drawCenter(1, paused ? 1.65 : 1.26);
       } else if (sceneIndex === 10) {
-        drawDivisions(1);
-        drawCircle(0.72);
-        drawPath(TRIANGLE, 'rgba(232, 199, 133, .98)', 1, 1, true, 1.35);
-        drawPath(MOVEMENT, 'rgba(216, 204, 179, .88)', 1, 1, true, 1.15);
-        drawPointsAndNumbers(1);
-        drawCenter(1);
+        const countPhase = reducedMotion ? 0.62 : (elapsed % 9000) / 9000;
+        const countSpan = 0.78;
+        const rawCount = clamp(countPhase / countSpan) * 9;
+        const completed = Math.min(9, Math.floor(rawCount));
+        const activeNumber = Math.min(9, completed + 1);
+        const activeProgress = rawCount - Math.floor(rawCount);
+        const gathering = smooth((countPhase - 0.80) / 0.18);
+        const gatheringAlpha = Math.sin(gathering * Math.PI);
+
+        drawDivisions(0.30);
+        drawCircle(0.62);
+        drawPath(TRIANGLE, 'rgba(232, 199, 133, .98)', 0.42, 1, true, 1.2);
+        drawPath(MOVEMENT, 'rgba(216, 204, 179, .88)', 0.38, 1, true, 1.05);
+        drawPointsAndNumbers(0.52);
+
+        for (let number = 1; number <= 9; number += 1) {
+          const point = points.get(number)!;
+          const counted = number <= completed;
+          const isActive = countPhase < countSpan && number === activeNumber;
+
+          if (counted || isActive) {
+            context.beginPath();
+            context.moveTo(point.x, point.y);
+            context.lineTo(cx, cy);
+            stroke(isActive ? 'rgba(242, 210, 149, .88)' : 'rgba(215, 195, 158, .46)', isActive ? 1.25 : 0.75, (isActive ? 0.92 : 0.34) * (1 - gathering));
+          }
+
+          if (counted) {
+            context.beginPath();
+            context.arc(point.x, point.y, 3.1, 0, Math.PI * 2);
+            context.fillStyle = 'rgba(226, 205, 165, .76)';
+            context.globalAlpha = 1 - gathering;
+            context.fill();
+            context.globalAlpha = 1;
+          }
+
+          if (isActive) {
+            const pulse = Math.sin(activeProgress * Math.PI);
+            context.beginPath();
+            context.arc(point.x, point.y, 6 + pulse * 5, 0, Math.PI * 2);
+            stroke('rgba(244, 214, 155, .92)', 1.15, 0.54 + pulse * 0.46);
+            context.beginPath();
+            context.arc(point.x, point.y, 3.9, 0, Math.PI * 2);
+            context.fillStyle = 'rgba(248, 220, 163, .98)';
+            context.fill();
+          }
+
+          if (gatheringAlpha > 0) {
+            const travelerX = point.x + (cx - point.x) * gathering;
+            const travelerY = point.y + (cy - point.y) * gathering;
+            context.beginPath();
+            context.moveTo(point.x, point.y);
+            context.lineTo(travelerX, travelerY);
+            stroke(number % 3 === 0 ? 'rgba(240, 207, 145, .72)' : 'rgba(211, 197, 169, .48)', 0.8, gatheringAlpha * 0.68);
+            context.beginPath();
+            context.arc(travelerX, travelerY, 2.7, 0, Math.PI * 2);
+            context.fillStyle = `rgba(242, 215, 163, ${gatheringAlpha * 0.90})`;
+            context.fill();
+          }
+        }
+
+        drawHeart(0.48 + gathering * 0.42);
+        drawCenter(1, 1.08 + (completed / 9) * 0.18 + gathering * 0.86);
         drawZero(1);
       } else if (sceneIndex === 11) {
         const phase = reducedMotion ? 0.5 : (elapsed % 12000) / 12000;
