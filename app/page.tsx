@@ -154,10 +154,10 @@ const SCENES: Scene[] = [
     slug: 'wajhullah',
     transliteration: 'Wajhullah',
     english: 'Sign of the Presence of God',
-    line: 'From the point, the complete sign returns: circumference, nine positions, both number paths, heart triangle, and center.',
-    source: 'Bakhtiar uses Wajhullah for the Sufi Enneagram as a whole—not for the center point alone.',
-    interpretation: 'The final scene resolves into the fully generated Enneagram and holds in stillness, preserving that whole-symbol meaning.',
-    cue: 'Watch the complete sign return, then remain with it in stillness.',
+    line: 'The complete sign returns, then three quadrangular fields and their tributary lines draw the nine positions toward the spiritual heart.',
+    source: 'Bakhtiar uses Wajhullah for the Sufi Enneagram as a whole. She also describes the nine positions connected through the threefold divisions to the positive trait of each segment, forming three quadrangles, with secondary lines compared to tributaries returning to a primary flow.',
+    interpretation: 'The epilogue reveals those three quadrangular fields and inward connections after the familiar circle and number paths, treating the additional linework as an animated reading of Bakhtiar’s internal architecture.',
+    cue: 'Watch the familiar sign complete itself, then open into its deeper network of lines.',
   },
 ];
 
@@ -298,6 +298,25 @@ function GeometryCanvas({
         if (completeSegments < segmentCount && remainder > 0) {
           const from = pathPoints[completeSegments];
           const to = pathPoints[completeSegments + 1];
+          context.lineTo(from.x + (to.x - from.x) * remainder, from.y + (to.y - from.y) * remainder);
+        }
+        stroke(color, lineWidth, alpha);
+      };
+
+      const drawCoordinatePath = (pathPoints: Point[], color: string, alpha = 1, progress = 1, close = true, lineWidth = 1) => {
+        const coordinates = close ? [...pathPoints, pathPoints[0]] : pathPoints;
+        const segmentCount = coordinates.length - 1;
+        const amount = clamp(progress) * segmentCount;
+        const completeSegments = Math.floor(amount);
+        const remainder = amount - completeSegments;
+        context.beginPath();
+        context.moveTo(coordinates[0].x, coordinates[0].y);
+        for (let index = 0; index < completeSegments; index += 1) {
+          context.lineTo(coordinates[index + 1].x, coordinates[index + 1].y);
+        }
+        if (completeSegments < segmentCount && remainder > 0) {
+          const from = coordinates[completeSegments];
+          const to = coordinates[completeSegments + 1];
           context.lineTo(from.x + (to.x - from.x) * remainder, from.y + (to.y - from.y) * remainder);
         }
         stroke(color, lineWidth, alpha);
@@ -622,13 +641,15 @@ function GeometryCanvas({
         drawCenter(1, 1.12 + cycle * 0.34);
         drawZero(0.95);
       } else {
-        const reveal = reducedMotion ? 1 : smooth(clamp(elapsed / 6800));
-        const circleReveal = smooth((reveal - 0.08) / 0.18);
-        const divisionReveal = smooth((reveal - 0.20) / 0.18);
-        const pointReveal = smooth((reveal - 0.33) / 0.17);
-        const triangleReveal = smooth((reveal - 0.47) / 0.18);
-        const movementReveal = smooth((reveal - 0.60) / 0.26);
-        const heartReveal = smooth((reveal - 0.82) / 0.18);
+        const reveal = reducedMotion ? 1 : smooth(clamp(elapsed / 9200));
+        const circleReveal = smooth((reveal - 0.05) / 0.16);
+        const divisionReveal = smooth((reveal - 0.16) / 0.16);
+        const pointReveal = smooth((reveal - 0.27) / 0.15);
+        const triangleReveal = smooth((reveal - 0.39) / 0.16);
+        const movementReveal = smooth((reveal - 0.51) / 0.20);
+        const heartReveal = smooth((reveal - 0.67) / 0.13);
+        const quadrangleReveal = smooth((reveal - 0.75) / 0.18);
+        const tributaryReveal = smooth((reveal - 0.84) / 0.16);
 
         drawCircle(circleReveal * 0.90);
         drawDivisions(divisionReveal * 0.88);
@@ -637,6 +658,43 @@ function GeometryCanvas({
         drawPath(MOVEMENT, 'rgba(216, 204, 179, .88)', 1, movementReveal, true, 1.12);
         drawHeart(heartReveal, 1);
         drawCenter(1, reducedMotion ? 1.16 : 1.16 + (1 - reveal) * 0.58);
+
+        const heartRadius = radius * 0.155;
+        const heartPoints: Point[] = [0, 1, 2].map((index) => {
+          const angle = -Math.PI / 2 + index * (Math.PI * 2 / 3);
+          return {
+            x: cx + Math.cos(angle) * heartRadius,
+            y: cy + Math.sin(angle) * heartRadius,
+            angle,
+          };
+        });
+        const quadrangleGroups = [
+          { outer: [8, 9, 1], inner: heartPoints[0] },
+          { outer: [2, 3, 4], inner: heartPoints[1] },
+          { outer: [5, 6, 7], inner: heartPoints[2] },
+        ];
+
+        quadrangleGroups.forEach((group, index) => {
+          const localReveal = smooth(quadrangleReveal * 3 - index);
+          const coordinates = [...group.outer.map((number) => points.get(number)!), group.inner];
+          drawCoordinatePath(coordinates, index === 0 ? 'rgba(238, 207, 148, .82)' : 'rgba(214, 199, 169, .66)', 0.84, localReveal, true, 0.95);
+        });
+
+        const tributaries = quadrangleGroups.flatMap((group) => (
+          group.outer.map((number) => ({ outer: points.get(number)!, inner: group.inner, number }))
+        ));
+        tributaries.forEach((line, index) => {
+          const localReveal = smooth(tributaryReveal * tributaries.length - index);
+          const travelerX = line.outer.x + (line.inner.x - line.outer.x) * localReveal;
+          const travelerY = line.outer.y + (line.inner.y - line.outer.y) * localReveal;
+          context.beginPath();
+          context.moveTo(line.outer.x, line.outer.y);
+          context.lineTo(travelerX, travelerY);
+          stroke(line.number % 3 === 0 ? 'rgba(240, 208, 148, .58)' : 'rgba(205, 193, 168, .38)', line.number % 3 === 0 ? 0.9 : 0.72, localReveal * 0.82);
+        });
+
+        drawHeart(heartReveal * (0.78 + tributaryReveal * 0.22), 1);
+        drawCenter(1, 1.16 + tributaryReveal * 0.48);
         drawZero(pointReveal);
       }
 
