@@ -1104,6 +1104,16 @@ export default function Home() {
               )}
             </div>
           </details>
+
+          {sceneIndex === SCENES.length - 1 && (
+            <footer className="creator-signature" aria-label="Created and designed by Muhammad Jameel">
+              <span className="creator-monogram" aria-hidden="true">MJ</span>
+              <span>
+                <small>Created &amp; designed by</small>
+                <strong>Muhammad Jameel</strong>
+              </span>
+            </footer>
+          )}
         </article>
       </section>
 
