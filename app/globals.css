@@ -214,9 +214,9 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 .research-note a { color: #b8a67f; text-decoration-color: rgba(215,185,121,.38); text-underline-offset: 3px; }
 .research-note a:hover { color: var(--gold); }
 
-.creator-signature { max-width: 540px; display: flex; align-items: center; gap: 13px; margin-top: clamp(68px, 9vh, 96px); color: #b8aa91; }
+.creator-signature { width: 100%; max-width: none; display: flex; align-items: center; justify-content: flex-end; gap: 13px; margin-top: clamp(96px, 14vh, 160px); padding-top: 14px; border-top: 1px solid var(--line); color: #b8aa91; }
 .creator-monogram { width: 34px; height: 34px; display: grid; flex: 0 0 auto; place-items: center; border: 1px solid rgba(215,185,121,.52); color: var(--gold); font: 10px Iowan Old Style, Baskerville, Georgia, serif; letter-spacing: .08em; }
-.creator-signature > span:last-child { display: grid; gap: 2px; }
+.creator-signature > span:last-child { display: grid; gap: 2px; text-align: right; }
 .creator-signature small { color: #91897e; font-size: 7px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .creator-signature strong { color: #ded2bd; font-family: Iowan Old Style, Baskerville, Georgia, serif; font-size: 22px; font-style: italic; font-weight: 400; line-height: 1.05; letter-spacing: -.02em; }
 
@@ -476,6 +476,17 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .research-note summary { font-size: 9.5px; line-height: 1.4; }
   .creator-signature { margin-top: clamp(52px, 7vh, 72px); }
   .creator-signature strong { font-size: 20px; }
+}
+
+@media (min-width: 941px) and (min-height: 701px) {
+  .creator-signature {
+    position: absolute;
+    right: clamp(36px, 4.4vw, 82px);
+    bottom: clamp(22px, 3.2vh, 40px);
+    left: clamp(36px, 4.4vw, 82px);
+    width: auto;
+    margin-top: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
