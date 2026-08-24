@@ -11,7 +11,6 @@ type Scene = {
   transliteration: string;
   english: string;
   overview?: string;
-  shahNote?: string;
   shaykhQuote?: {
     text: string;
     attribution: string;
@@ -38,8 +37,7 @@ const SCENES: Scene[] = [
     slug: 'hosh-dar-dam',
     transliteration: 'Hosh dar dam',
     english: 'Conscious breathing',
-    overview: 'Safeguard inhalation, exhalation, and the interval between them from heedlessness, so the heart remains connected to the Divine Presence.',
-    shahNote: 'He adds remembering and reaching toward subtle perception to the awareness of breathing.',
+    overview: 'Safeguard inhalation, exhalation, and the interval between them from heedlessness, so the heart remains connected to the Divine Presence. Conscious breathing is also remembering: attention reaches toward subtler perception without losing that Presence.',
     shaykhQuote: {
       text: 'This Order is built on breath.',
       attribution: 'Shah Naqshband ق',
@@ -54,8 +52,7 @@ const SCENES: Scene[] = [
     slug: 'nazar-bar-qadam',
     transliteration: 'Nazar bar qadam',
     english: 'Watch your step',
-    overview: 'Join gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence.',
-    shahNote: 'He emphasizes awareness in action, watchfulness, and concentration.',
+    overview: 'Join gaze and step: lower the gaze, avoid unnecessary sights that veil the heart, and move steadily toward the Divine Presence. In this joined awareness, every action becomes an occasion for watchfulness and concentration.',
     shaykhQuote: {
       text: 'The gaze precedes the step and the step follows the gaze.',
       attribution: 'Imam ar-Rabbani Ahmad al-Faruqi ق',
@@ -70,8 +67,7 @@ const SCENES: Scene[] = [
     slug: 'safar-dar-watan',
     transliteration: 'Safar dar watan',
     english: 'Journey homeward',
-    overview: 'Distinguish outward travel from the inward journey: leave lower manners and worldly desire for higher manners, purity, and movement from creation toward the Creator.',
-    shahNote: 'He renders this as “Travel in One’s Own Land”: exploration and transformation of the self.',
+    overview: 'Distinguish outward travel from the inward journey. To travel in one’s own land is to explore and transform the self: leaving lower manners and worldly desire for higher manners, purity, and movement from creation toward the Creator.',
     line: 'Journeys begin at different points around the circumference and return together to zero.',
     source: 'Bakhtiar directly describes inward microcosmic movement toward the spiritual center. Its pairing here is conceptually adjacent.',
     interpretation: 'The traveling point makes that inward relation spatial and visible.',
@@ -82,8 +78,7 @@ const SCENES: Scene[] = [
     slug: 'khalwat-dar-anjuman',
     transliteration: 'Khalwat dar anjuman',
     english: 'Solitude in the crowd',
-    overview: 'Remain outwardly in companionship with people while the heart is inwardly present with God: true seclusion within the gathering.',
-    shahNote: 'He describes “Solitude in Company” as detaching and reattaching consciousness.',
+    overview: 'Remain outwardly in companionship with people while the heart is inwardly present with God. Solitude in company becomes a discipline of detaching consciousness from distraction and returning it inwardly without abandoning the gathering.',
     shaykhQuote: {
       text: 'Our Way is Companionship, and Goodness is in the Gathering',
       attribution: 'Shah Naqshband ق',
@@ -109,8 +104,7 @@ const SCENES: Scene[] = [
     slug: 'baz-gasht',
     transliteration: 'Baz gasht',
     english: 'Restraint · returning',
-    overview: 'Return to Allah in surrender, submission, and humility, with God as the seeker’s goal.',
-    shahNote: 'He gives the contrasting rendering “restraint,” literally “pulling back.”',
+    overview: 'Return to Allah in surrender, submission, and humility, with God as the seeker’s goal. This returning is also restraint: a pulling back from dispersion toward the Divine aim.',
     shaykhQuote: {
       text: 'When I reached Him I saw that His remembering of me preceded my remembrance of Him.',
       attribution: 'Bayazid',
@@ -151,8 +145,7 @@ const SCENES: Scene[] = [
     slug: 'wuquf-i-zamani',
     transliteration: 'Wuquf-i zamani',
     english: 'Pause of time',
-    overview: 'Watch each moment for composure or heedlessness, recognizing presence and negligence, thanking God for good, and seeking forgiveness for lapses.',
-    shahNote: 'He renders this as “Pause of Time” and adds the reprise of thought and action.',
+    overview: 'Watch each moment for composure or heedlessness, recognizing presence and negligence, thanking God for good, and seeking forgiveness for lapses. The pause becomes a reprise in which thought and action can be seen again.',
     line: 'Turning rings make duration visible; one touch holds them at a single moment.',
     source: 'Bakhtiar directly treats breath as rhythm in time. Connecting that idea to this principle is conceptually adjacent.',
     interpretation: 'A visitor-controlled suspension makes temporal awareness visible.',
@@ -939,7 +932,7 @@ export default function Home() {
               <div className="principles-heading">
                 <p className="intro-kicker">The sequence made explicit</p>
                 <h1>The eleven<br />principles</h1>
-                <p>The explanations follow teachings of the Naqshbandi Shaykhs; selected notes from Idries Shah offer a second reading. Each principle changes the behavior of the same sign.</p>
+                <p>The explanations bring teachings of the Naqshbandi Shaykhs into dialogue with Idries Shah’s concise renderings. Each principle changes the behavior of the same sign.</p>
                 <button type="button" className="intro-primary" onClick={() => enterAt(0)}>Begin with the Point <Arrow direction="right" /></button>
               </div>
               <div className="principle-overview" aria-label="The eleven Naqshbandi principles">
@@ -1060,9 +1053,6 @@ export default function Home() {
           {scene.overview && (
             <aside className="source-overview" aria-label={`Overview of ${scene.transliteration}`}>
               <p>{scene.overview}</p>
-              {scene.shahNote && (
-                <p className="shah-note"><span>Idries Shah adds</span>{scene.shahNote}</p>
-              )}
             </aside>
           )}
 
