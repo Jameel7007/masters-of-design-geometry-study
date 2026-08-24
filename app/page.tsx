@@ -932,7 +932,7 @@ export default function Home() {
               <div className="principles-heading">
                 <p className="intro-kicker">The sequence made explicit</p>
                 <h1>The eleven<br />principles</h1>
-                <p>The explanations bring teachings of the Naqshbandi Shaykhs into dialogue with Idries Shah’s concise renderings. Each principle changes the behavior of the same sign.</p>
+                <p>The explanations bring the teachings of the Naqshbandi Shaykhs into dialogue with the sacred geometry. Each principle reveals a different expression of the same sign.</p>
                 <button type="button" className="intro-primary" onClick={() => enterAt(0)}>Begin with the Point <Arrow direction="right" /></button>
               </div>
               <div className="principle-overview" aria-label="The eleven Naqshbandi principles">
