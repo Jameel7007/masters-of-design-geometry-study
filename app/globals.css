@@ -297,8 +297,9 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
 }
 
 @media (max-width: 600px) {
+  .geometry-caption { font-size: 7px; letter-spacing: .14em; }
   .introduction-shell { grid-template-rows: 64px auto auto; }
-  .intro-masthead { padding: 0 17px; gap: 11px; }
+  .intro-masthead { grid-template-columns: auto minmax(0, 1fr) auto; padding: 0 17px; gap: 11px; }
   .intro-skip { min-height: 36px; gap: 7px; padding: 0 9px; font-size: 7px; letter-spacing: .06em; }
   .intro-skip span { font-size: 14px; }
   .dedication-page { grid-template-rows: minmax(300px, 43svh) auto; }
@@ -319,7 +320,7 @@ h1 { position: relative; max-width: 680px; margin: 21px 0 0; font-family: Iowan 
   .intro-arrow { gap: 5px; padding: 0 6px; font-size: 7px; letter-spacing: .06em; }
   .intro-arrow > span:first-child { font-size: 15px; }
   .experience-shell { grid-template-rows: 64px 62px auto; }
-  .masthead { padding: 0 17px; gap: 11px; }
+  .masthead { grid-template-columns: auto minmax(0, 1fr) auto auto; padding: 0 17px; gap: 11px; }
   .mark { width: 31px; height: 31px; }
   .overline { font-size: 11px; letter-spacing: .12em; }
   .status { max-width: 210px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 8px; }
