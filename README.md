@@ -4,6 +4,12 @@ An interactive study of the Sufi Enneagram and eleven Naqshbandi principles. One
 
 **[Explore the live site](https://jameel7007.github.io/masters-of-design-geometry-study/)**
 
+![The opening: the Enneagram drawn from nine positions, beside the title "One sign. Eleven ways of attention."](docs/readme/opening.jpg)
+
+| The eleven principles | Principle 05, Yad kard |
+| --- | --- |
+| ![The eleven Naqshbandi principles listed with their English glosses](docs/readme/principles.jpg) | ![The sign redrawn for Yad kard, essential remembrance](docs/readme/principle-05.jpg) |
+
 ## What you can explore
 
 - See a point develop into a circle, nine equally spaced positions, the `9 → 3 → 6` triangle, the `1 → 4 → 2 → 8 → 5 → 7` movement line, and a smaller heart triangle.
